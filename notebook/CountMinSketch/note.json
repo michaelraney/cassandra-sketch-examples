@@ -1,0 +1,293 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n\n# Count Min Sketch\n\nHelpful in finding the frequency of items in a stream of data.  In the following example we will take a look at estimating the frequency of the top 10 tweeters in streaming application. \n\nPushing the distribution calculation of a single window to a timeseries data structure in DSE we can discover frequency across any time range. \n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 9:26:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false,
+        "lineNumbers": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eCount Min Sketch\u003c/h1\u003e\n\u003cp\u003eHelpful in finding the frequency of items in a stream of data. In the following example we will take a look at estimating the frequency of the top 10 tweeters in streaming application. \u003c/p\u003e\n\u003cp\u003ePushing the distribution calculation of a single window to a timeseries data structure in DSE we can discover frequency across any time range.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509321292317_1159257553",
+      "id": "20171029-195452_1404958465",
+      "dateCreated": "Oct 29, 2017 7:54:52 PM",
+      "dateStarted": "Oct 29, 2017 9:26:24 PM",
+      "dateFinished": "Oct 29, 2017 9:26:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Add Spark Dependencies",
+      "text": "%dep\n\n//Add these dependencies to the interpreter to make your life easier...\n\nz.reset()\nz.load(\"com.twitter:algebird-core_2.11:0.13.3\")\nz.load(\"org.apache.bahir:spark-streaming-twitter_2.10:2.1.0\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 11:11:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1509331920429_1370368905",
+      "id": "20171029-225200_1695000914",
+      "dateCreated": "Oct 29, 2017 10:52:00 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create Keyspace",
+      "text": "%cassandra\n\nCREATE KEYSPACE IF NOT EXISTS approximations WITH REPLICATION \u003d { \u0027class\u0027 : \u0027SimpleStrategy\u0027, \u0027replication_factor\u0027 : 1 };\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:00:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1509312007078_-415589664",
+      "id": "20171029-172007_472160345",
+      "dateCreated": "Oct 29, 2017 5:20:07 PM",
+      "dateStarted": "Oct 29, 2017 5:23:00 PM",
+      "dateFinished": "Oct 29, 2017 5:23:00 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create Table For Timeseries",
+      "text": "%cassandra\n\nCREATE TABLE approximations.cmsdata ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:00:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE TABLE approximates.cmsdata ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509130709153_-1109660634",
+      "id": "20171027-145829_385231240",
+      "dateCreated": "Oct 27, 2017 2:58:29 PM",
+      "dateStarted": "Oct 29, 2017 6:03:40 PM",
+      "dateFinished": "Oct 29, 2017 6:03:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Process Stream and Perform CMS on each Window",
+      "text": "%spark\n\nimport com.twitter.algebird._\nimport com.twitter.algebird.CMSHasherImplicits._\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\nimport com.twitter.chill.ScalaKryoInstantiator\nimport java.text.SimpleDateFormat\n\n    //Spark Streaming\n    val batchIntervalSeconds \u003d 10\n    val minutesToStream \u003d 5\n    \n    @transient  val ssc \u003d new StreamingContext(sc, Seconds(batchIntervalSeconds))\n    \n    //https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/CountMinSketch.scala \n    // CMS parameters\n    \n    //A bound on the probability that a query estimate does not lie within \n    //some small interval (an interval that depends on `eps`) around the truth.\n    val DELTA \u003d 1E-3 \n    \n    //One-sided error bound on the error of each point query, i.e. frequency estimate.\n    val EPS \u003d 0.01 \n    \n    //A seed to initialize the random number generator used to create the pairwise independent hash functions.\n    val SEED \u003d 1 \n    \n    // heavyHittersPct: A threshold for finding heavy hitters, i.e., elements that appear\n    //at least (heavyHittersPct * totalCount) times in the stream.\n    val PERC \u003d 0.001 \n    \n    // val cms \u003d new CountMinSketchMonoid(EPS, DELTA, SEED, PERC)\n    // val cms \u003d NEW TopNCMS.monoid[Long](EPS, DELTA, SEED, N)\n    val cms \u003d TopPctCMS.monoid[String](EPS, DELTA, SEED, PERC)\n   \n    //Twitter Authentication\n    @transient val cb \u003d new ConfigurationBuilder();\n   \n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n    @transient val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val filters \u003d new Array[String](0)\n    \n    //Twitter Stream\n    @transient val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER_2)\n    \n    //Twitter UserIds in Batch of Tweets\n    @transient val users \u003d stream.map(status \u003d\u003e status.getUser.getName())\n\n    @transient  val approxTopUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e cms.create(id))\n    }).reduce(_ ++ _)\n\n    //Used to create bucketing for timeseries.\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n        \n    approxTopUsers.foreachRDD(rdd \u003d\u003e {\n      if (rdd.count() !\u003d 0) {\n        val now \u003d new Date()\n        \n        val partial \u003d rdd.first()\n        \n        val store \u003d ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)\n\n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, store)))\n        \n        oneWindowValue.saveToCassandra(\"approximations\", \"cmsdata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"cmsstore\"))\n\n        \n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//5 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n    ",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:15:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 344.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport com.twitter.algebird._\n\nimport com.twitter.algebird.CMSHasherImplicits._\n\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport org.apache.spark.streaming.twitter._\n\nimport twitter4j.conf.ConfigurationBuilder\n\nimport twitter4j.auth.OAuthAuthorization\n\nimport java.util.Date\n\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\n\nimport com.datastax.spark.connector.SomeColumns\n\nimport com.twitter.chill.ScalaKryoInstantiator\n\nimport java.text.SimpleDateFormat\n\nbatchIntervalSeconds: Int \u003d 10\n\nminutesToStream: Int \u003d 1\n\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@56d177ac\n\nDELTA: Double \u003d 0.001\n\nEPS: Double \u003d 0.01\n\nSEED: Int \u003d 1\n\nPERC: Double \u003d 0.001\n\ncms: com.twitter.algebird.TopPctCMSMonoid[String] \u003d com.twitter.algebird.TopPctCMSMonoid@7aae7ce7\n\ncb: twitter4j.conf.ConfigurationBuilder \u003d twitter4j.conf.ConfigurationBuilder@7795efd8\n\nres32: twitter4j.conf.ConfigurationBuilder \u003d twitter4j.conf.ConfigurationBuilder@7795efd8\n\nauth: twitter4j.auth.OAuthAuthorization \u003d OAuthAuthorization{consumerKey\u003d\u00277foJQWMfxU9p6K70M0o716fFX\u0027, consumerSecret\u003d\u0027******************************************\u0027, oauthToken\u003dAccessToken{screenName\u003d\u0027null\u0027, userId\u003d58465931}}\n\nfilters: Array[String] \u003d Array()\n\nstream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@1bc145b3\n\nusers: org.apache.spark.streaming.dstream.DStream[String] \u003d org.apache.spark.streaming.dstream.MappedDStream@65a02956\n\napproxTopUsers: org.apache.spark.streaming.dstream.DStream[com.twitter.algebird.TopCMS[String]] \u003d org.apache.spark.streaming.dstream.MappedDStream@752b1933\n\nsdf: java.text.SimpleDateFormat \u003d java.text.SimpleDateFormat@ac880840\n\nnow: java.util.Date \u003d Sun Oct 29 21:51:33 EDT 2017\n\ntodayAsString: String \u003d 10-29-2017\n\nres35: Boolean \u003d false\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509134390255_-2013977677",
+      "id": "20171027-155950_98980029",
+      "dateCreated": "Oct 27, 2017 3:59:50 PM",
+      "dateStarted": "Oct 29, 2017 9:51:11 PM",
+      "dateFinished": "Oct 29, 2017 9:53:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Perform CMS on Larger Time Window",
+      "text": "%spark\n\nimport com.twitter.algebird._\nimport com.twitter.algebird.CMSHasherImplicits._\nimport com.twitter.chill.ScalaKryoInstantiator\n\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\n\n\n// K highest frequency elements to take\nval TOPK \u003d 10\n\nval todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n    \nval rdd  \u003d sc.cassandraTable[Array[Byte]](\"approximations\", \"cmsdata\").select(\"cmsstore\").where(\"id \u003d ?\", \"tweets\").where(\"date \u003d ?\", todayAsString)\n\nval approxUsers \u003d rdd.mapPartitions(ids \u003d\u003e {\n  ids.map(id \u003d\u003e ScalaKryoInstantiator.defaultPool.fromBytes(id).asInstanceOf[TopCMS[String]])\n}).reduce(_ ++ _)\n\n  \nval globalTopK \u003d approxUsers.heavyHitters.map(id \u003d\u003e\n          (id, approxUsers.frequency(id).estimate)).toSeq.sortBy(_._2).reverse.slice(0, TOPK)\n\nz.show(globalTopK.toDF(\"User Name\", \"Number of Tweets\"))\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:00:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "1": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "multiBarChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "User Name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "Number of Tweets",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport com.twitter.algebird._\n\nimport com.twitter.algebird.CMSHasherImplicits._\n\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\n\nimport com.datastax.spark.connector.SomeColumns\n\nPERC: Double \u003d 0.001\n\nTOPK: Int \u003d 10\n\ntodayAsString: String \u003d 10-29-2017\n\nrdd: com.datastax.spark.connector.rdd.CassandraTableScanRDD[Array[Byte]] \u003d CassandraTableScanRDD[488] at RDD at CassandraRDD.scala:19\napproxUsers: com.twitter.algebird.TopCMS[String] \u003d TopCMSInstance(CMSInstance(CountsTable(Vector(Vector(3, 2, 0, 2, 0, 1, 0, 1, 0, 2, 0, 1, 1, 2, 0, 2, 2, 1, 2, 0, 2, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 3, 0, 1, 0, 1, 0, 0, 0, 1, 3, 2, 1, 1, 1, 0, 0, 2, 3, 0, 1, 3, 0, 0, 2, 2, 0, 3, 2, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 3, 1, 2, 2, 0, 1, 1, 0, 3, 5, 0, 1, 2, 2, 1, 0, 2, 1, 0, 0, 0, 1, 0, 1, 3, 2, 0, 1, 2, 1, 2, 2, 2, 1, 1, 0, 1, 2, 3, 0, 1, 1, 2, 1, 2, 2, 2, 0, 1, 1, 0, 2, 0, 1, 2, 2, 0, 3, 0, 1, 0, 2, 0, 0, 1, 0, 1, 2, 1, 2, 1, 0, 0, 1, 1, 0, 2, 1, 1, 1, 3, 1, 0, 0, 0, 2, 1, 1, 1, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 3, 2, 0, 3, 0, 1, 1, 2, 0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 4, 1, 1, 3, 2, 0, 0, 1, 0, 1, 0, 2, 0, 2, 1, 0, 0, ...\nglobalTopK: Seq[(String, Long)] \u003d ArrayBuffer((Matheus,2), (Dixon,2), (♥︎ⓟⓡⓘⓜ♥︎🍒,2), (بنت ليبيا,2), (Lubo Flores,2), (karla 🌈,2), (LETTRE À ZOÉ,2), (hum_op,2), (Victor,2), (amonrat😋,2))\n"
+          },
+          {
+            "type": "TABLE",
+            "data": "User Name\tNumber of Tweets\nMatheus\t2\nDixon\t2\n♥︎ⓟⓡⓘⓜ♥︎🍒\t2\nبنت ليبيا\t2\nLubo Flores\t2\nkarla 🌈\t2\nLETTRE À ZOÉ\t2\nhum_op\t2\nVictor\t2\namonrat😋\t2\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509317228963_-1205435949",
+      "id": "20171029-184708_658789968",
+      "dateCreated": "Oct 29, 2017 6:47:08 PM",
+      "dateStarted": "Oct 29, 2017 9:53:47 PM",
+      "dateFinished": "Oct 29, 2017 9:53:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1508897830793_967999838",
+      "id": "20171024-221710_1027774543",
+      "dateCreated": "Oct 24, 2017 10:17:10 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DataStax Sketches/CountMinSketch",
+  "id": "2CVNWCWZ4",
+  "angularObjects": {
+    "2CYQJDWVR:shared_process": [],
+    "2CX4XD82R:shared_process": [],
+    "2CX8KQKX6:shared_process": [],
+    "2CX8NHPMT:shared_process": [],
+    "2CXZ4DJ9D:shared_process": [],
+    "2CVZVC78P:shared_process": [],
+    "2CVCKC261:shared_process": [],
+    "2CVN8SZ2K:shared_process": [],
+    "2CX22KWY9:shared_process": [],
+    "2CY63N5YW:shared_process": [],
+    "2CWD6KZ4F:shared_process": [],
+    "2CW1XE6V5:shared_process": [],
+    "2CYXXU57D:shared_process": [],
+    "2CYFA5J4Y:shared_process": [],
+    "2CZ8799S8:shared_process": [],
+    "2CVNMGNH2:shared_process": [],
+    "2CWVZ86QG:shared_process": [],
+    "2CXAV6KVC:shared_process": [],
+    "2CVJFFRZ7:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

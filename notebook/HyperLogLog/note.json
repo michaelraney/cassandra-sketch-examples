@@ -1,0 +1,348 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\n# HyperLogLog\n\nHyperloglog addresses the problem in determining cardinality on large datasets. Usefull for efficiantly summerizing streams of data such as number of unique visitors of a website or counting ad impressions.\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 9:59:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eHyperLogLog\u003c/h1\u003e\n\u003cp\u003eHyperloglog addresses the problem in determining cardinality on large datasets. Usefull for efficiantly summerizing streams of data such as number of unique visitors of a website or counting ad impressions.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509328591687_-1932585205",
+      "id": "20171029-215631_784415406",
+      "dateCreated": "Oct 29, 2017 9:56:31 PM",
+      "dateStarted": "Oct 29, 2017 9:59:07 PM",
+      "dateFinished": "Oct 29, 2017 9:59:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Add Spark Dependencies",
+      "text": "%dep\n\n//Add these dependencies to the interpreter to make your life easier...\n\nz.reset()\nz.load(\"com.twitter:algebird-core_2.11:0.13.3\")\nz.load(\"org.apache.bahir:spark-streaming-twitter_2.10:2.1.0\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:51:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Must be used before SparkInterpreter (%spark) initialized\nHint: put this paragraph before any Spark code and restart Zeppelin/Interpreter"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509330774905_-706528084",
+      "id": "20171029-223254_15426998",
+      "dateCreated": "Oct 29, 2017 10:32:54 PM",
+      "dateStarted": "Oct 29, 2017 10:51:05 PM",
+      "dateFinished": "Oct 29, 2017 10:51:05 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create Keyspace",
+      "text": "%cassandra\n\nCREATE KEYSPACE IF NOT EXISTS approximations WITH REPLICATION \u003d { \u0027class\u0027 : \u0027SimpleStrategy\u0027, \u0027replication_factor\u0027 : 1 };",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:16:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE KEYSPACE IF NOT EXISTS approximations WITH REPLICATION \u003d { \u0027class\u0027 : \u0027SimpleStrategy\u0027, \u0027replication_factor\u0027 : 1 };\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509319552381_380422920",
+      "id": "20171029-192552_1819477421",
+      "dateCreated": "Oct 29, 2017 7:25:52 PM",
+      "dateStarted": "Oct 29, 2017 10:16:25 PM",
+      "dateFinished": "Oct 29, 2017 10:16:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create Table",
+      "text": "%cassandra\n\nCREATE TABLE IF NOT EXISTS approximations.hlldata ( id text, date text, batchtime timestamp, batchwindow int, totalinwindow int, uniqueperbatch int, hllstore blob, PRIMARY KEY ((id, date), batchTime));\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:16:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE TABLE IF NOT EXISTS approximations.hlldata ( id text, date text, batchtime timestamp, batchwindow int, totalinwindow int, uniqueperbatch int, hllstore blob, PRIMARY KEY ((id, date), batchTime));\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1508883681568_-609384909",
+      "id": "20171024-182121_1460140069",
+      "dateCreated": "Oct 24, 2017 6:21:21 PM",
+      "dateStarted": "Oct 29, 2017 10:16:28 PM",
+      "dateFinished": "Oct 29, 2017 10:16:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nimport com.twitter.algebird.HyperLogLog._\nimport com.twitter.algebird.HyperLogLogMonoid\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\n\n/**\n * Example of using HyperLogLog monoid from Twitter\u0027s Algebird together with Spark Streaming\u0027s\n * TwitterInputDStream\n */\n\n    /** Bit size parameter for HyperLogLog, trades off accuracy vs size */\n    val BIT_SIZE \u003d 12\n    \n    //Size of window in Stream Processing\n    val WINDOW_SIZE \u003d 10\n    val minutesToStream \u003d 1;\n    \n    val filters \u003d new Array[String](0)\n    \n    val cb \u003d new ConfigurationBuilder();\n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n   \n    val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val ssc \u003d new StreamingContext(sc, Seconds(WINDOW_SIZE))\n    \n    val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER)\n\n    val users \u003d stream.map(status \u003d\u003e status.getUser.getId)\n\n    val hll \u003d new HyperLogLogMonoid(BIT_SIZE)\n    \n    val approxUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e hll.create(id))\n    }).reduce(_ + _)\n\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n   \n    approxUsers.foreachRDD(rdd \u003d\u003e {\n      val totalInWindow \u003d rdd.count();\n      if (totalInWindow !\u003d 0) {\n       \n        val now \u003d new Date();\n       \n        val partial \u003d rdd.first()\n       \n        val uniqueperbatch \u003d partial.estimatedSize.toInt\n        \n        println(\"Total entries in this batch: %d\".format(totalInWindow))\n        println(\"Approx distinct users this batch: %d\".format(uniqueperbatch))\n        \n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, WINDOW_SIZE, totalInWindow, uniqueperbatch, toBytes(partial))))\n       \n        oneWindowValue.saveToCassandra(\"approximations\", \"hlldata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"batchwindow\", \"totalinwindow\", \"uniqueperbatch\", \"hllstore\"))\n\n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//2 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:47:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 92.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport org.apache.spark.streaming.twitter._\n\nimport twitter4j.conf.ConfigurationBuilder\n\nimport twitter4j.auth.OAuthAuthorization\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\nTotal entries in this batch: 1\nApprox distinct users this batch: 230\nTotal entries in this batch: 1\nApprox distinct users this batch: 405\nTotal entries in this batch: 1\nApprox distinct users this batch: 282\nTotal entries in this batch: 1\nApprox distinct users this batch: 363\nTotal entries in this batch: 1\nApprox distinct users this batch: 380\nTotal entries in this batch: 1\nApprox distinct users this batch: 300\nTotal entries in this batch: 1\nApprox distinct users this batch: 101\n\n\n\n\n\n\n\n\n\nimport com.datastax.spark.connector.SomeColumns\nBIT_SIZE: Int \u003d 12\nWINDOW_SIZE: Int \u003d 10\nminutesToStream: Int \u003d 1\nfilters: Array[String] \u003d Array()\ncb: twitter4j.conf.ConfigurationBuilder \u003d twitter4j.conf.ConfigurationBuilder@37c72ac6\nauth: twitter4j.auth.OAuthAuthorization \u003d OAuthAuthorization{consumerKey\u003d\u00277foJQWMfxU9p6K70M0o716fFX\u0027, consumerSecret\u003d\u0027******************************************\u0027, oauthToken\u003dAccessToken{screenName\u003d\u0027null\u0027, userId\u003d58465931}}\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@276551e8\nstream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@36d6f165\nusers: org.apache.spark.streaming.dstream.DStream[Long] \u003d org.apache.spark.streaming.dst..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1508869186050_-1220730212",
+      "id": "20171024-141946_1818057078",
+      "dateCreated": "Oct 24, 2017 2:19:46 PM",
+      "dateStarted": "Oct 29, 2017 10:47:15 PM",
+      "dateFinished": "Oct 29, 2017 10:48:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\nimport com.datastax.spark.connector.rdd._\nimport org.apache.spark.SparkContext    \nimport org.apache.spark.SparkContext._\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport com.twitter.algebird.HyperLogLog._\nimport com.twitter.algebird.HyperLogLogMonoid\nimport org.apache.log4j.{Level, Logger}\nimport com.twitter.algebird.HLL\nimport java.util.Date\nimport java.text.SimpleDateFormat\n\nval todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n   \nval rdd  \u003d sc.cassandraTable[Array[Byte]](\"approximations\", \"hlldata\")\n              .select(\"hllstore\")\n              .where(\"id \u003d ?\", \"tweets\").where(\"date \u003d ?\", todayAsString)\n\nval approxUsers \u003d rdd.mapPartitions(ids \u003d\u003e {\n  ids.map(id \u003d\u003e fromBytes(id))\n}).reduce(_ + _)\n\nval hllagg \u003d approxUsers.estimatedSize.toInt\n\nprintln(\"Total For HLL:\"+hllagg)\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:49:06 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\n\nimport com.datastax.spark.connector.SomeColumns\n\nimport com.datastax.spark.connector.rdd._\n\nimport org.apache.spark.SparkContext\n\nimport org.apache.spark.SparkContext._\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport com.twitter.algebird.HLL\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\ntodayAsString: String \u003d 10-29-2017\n\nwarning: Class org.joda.convert.FromString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.FromString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nrdd: com.datastax.spark.connector.rdd.CassandraTableScanRDD[Array[Byte]] \u003d CassandraTableScanRDD[65] at RDD at CassandraRDD.scala:19\napproxUsers: com.twitter.algebird.HLL \u003d DenseHLL(12,Bytes(0,0,2,0,1,0,0,1,1,0,2,2,1,4,0,0,0,0,3,0,0,0,0,0,1,0,1,0,0,0,0,2,0,0,0,0,0,0,3,1,3,3,2,0,0,0,1,0,0,0,3,0,0,0,0,0,1,0,0,1,2,1,0,0,0,0,4,0,0,0,1,2,5,0,1,0,0,0,2,0,0,0,3,2,0,3,0,0,1,3,0,1,0,0,1,1,0,0,0,1,1,3,1,0,0,0,0,0,2,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,1,2,0,1,0,0,0,0,0,2,1,0,0,0,0,2,7,0,1,2,0,2,1,4,2,2,0,6,2,0,0,1,1,0,0,2,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,1,0,0,1,3,2,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,3,2,5,0,0,0,0,0,0,2,0,0,2,0,0,2,1,0,3,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,2,1,0,1,0,2,0,3,2,0,5,0,1,0,2,0,0,1,0,0,0,0,0,5,0,0,2,4,1,3,0,0,1,2,0,0,0,1,0,0,4,2,3,1,0,2,0,2,0,0,4,0,0,0,1,4,1,1,0,0,1,2,0,0,1,4,0,3,0,0,0,0,0,4,2,0,1,0,1,0,0,1,1,2,0,6,0,0,0,2,0,0,1,2,5,2,1,1,0,0,0,0...\nhllagg: Int \u003d 2061\nTotal For HLL:2061\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509047873901_-397627896",
+      "id": "20171026-155753_802562419",
+      "dateCreated": "Oct 26, 2017 3:57:53 PM",
+      "dateStarted": "Oct 29, 2017 10:49:06 PM",
+      "dateFinished": "Oct 29, 2017 10:49:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%cassandra\n\nSELECT * FROM approximations.hlldata WHERE id \u003d \u0027tweets\u0027 ALLOW FILTERING;",
+      "user": "anonymous",
+      "dateUpdated": "Oct 29, 2017 10:50:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "lineChart": {},
+                "stackedAreaChart": {
+                  "style": "stack"
+                },
+                "multiBarChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "batchtime",
+                  "index": 2.0,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "id",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "uniqueperbatch",
+                  "index": 6.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id\tdate\tbatchtime\tbatchwindow\thllstore\ttotalinwindow\tuniqueperbatch\ntweets\t10-29-2017\tSun Oct 29 22:47:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d674 cap\u003d674]\t1\t230\ntweets\t10-29-2017\tSun Oct 29 22:47:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t405\ntweets\t10-29-2017\tSun Oct 29 22:47:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t282\ntweets\t10-29-2017\tSun Oct 29 22:48:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t363\ntweets\t10-29-2017\tSun Oct 29 22:48:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t380\ntweets\t10-29-2017\tSun Oct 29 22:48:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t300\ntweets\t10-29-2017\tSun Oct 29 22:48:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d302 cap\u003d302]\t1\t101\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1508888237215_947822464",
+      "id": "20171024-193717_1816755798",
+      "dateCreated": "Oct 24, 2017 7:37:17 PM",
+      "dateStarted": "Oct 29, 2017 10:49:49 PM",
+      "dateFinished": "Oct 29, 2017 10:49:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1508870408928_-354877741",
+      "id": "20171024-144008_2052649078",
+      "dateCreated": "Oct 24, 2017 2:40:08 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "DataStax Sketches/HyperLogLog",
+  "id": "2CX4D919U",
+  "angularObjects": {
+    "2CYQJDWVR:shared_process": [],
+    "2CX4XD82R:shared_process": [],
+    "2CX8KQKX6:shared_process": [],
+    "2CX8NHPMT:shared_process": [],
+    "2CXZ4DJ9D:shared_process": [],
+    "2CVZVC78P:shared_process": [],
+    "2CVCKC261:shared_process": [],
+    "2CVN8SZ2K:shared_process": [],
+    "2CX22KWY9:shared_process": [],
+    "2CY63N5YW:shared_process": [],
+    "2CWD6KZ4F:shared_process": [],
+    "2CW1XE6V5:shared_process": [],
+    "2CYXXU57D:shared_process": [],
+    "2CYFA5J4Y:shared_process": [],
+    "2CZ8799S8:shared_process": [],
+    "2CVNMGNH2:shared_process": [],
+    "2CWVZ86QG:shared_process": [],
+    "2CXAV6KVC:shared_process": [],
+    "2CVJFFRZ7:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
