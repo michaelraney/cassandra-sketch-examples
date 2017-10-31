@@ -56,5 +56,5 @@ The examples use the Twitter Streaming API. To run these examples, you will need
 * Zeppelin and Datastax http://www.doanduyhai.com/blog/?p=2325 (Configuring Vanilla Zeppelin)
 * Algebird https://github.com/twitter/algebird
 * CountMinSketch Paper https://arxiv.org/pdf/1502.04885v1.pdf
-* Getting Stated with TimeSeries Modeling https://academy.datastax.com/resources/getting-started-time-series-data-modeling
+* Cassandra TimeSeries Modeling https://academy.datastax.com/resources/getting-started-time-series-data-modeling
 
