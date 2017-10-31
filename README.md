@@ -39,6 +39,7 @@ https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Appr
 * * https://drive.google.com/drive/u/1/folders/0B6wR2aj4Cb6wQ01aR3ItR0xUNms
 * Import Notebook
 * * Copy notebook directory of this project to notebook directory in your zepplin home
+* * Replace The twitter credentials in the notebook with your own (See below).
 
 ### Required for Twitter Streaming Examples
 The examples use the Twitter Streaming API. To run these examples, you will need to signup for the Twitter API to gain the appropriate credentials.  To include API key, API secret, Access token, and Access token secret, follow the steps below:
