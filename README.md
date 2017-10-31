@@ -32,6 +32,9 @@ https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Appr
 * DataStax Enterprise with Spark Enabled
 * Sketch Library - A library which provides abstractions for abstract algebra in the Scala programming language. In this example we will use Algebird, but from a Datastax perspective we are not limited to a specific sketching library. 
 
+![alt text](
+https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Architecture.png "Architecture")
+
 ## How To Use Examples
 
 * Download Zepplin With DataStax Driver (as of Zepp 7.1 and DSE 5.1) 
