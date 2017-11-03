@@ -14,11 +14,11 @@ if [ `hostname` == 'node0' ]
 then
   curl -O 'https://drive.google.com/file/d/1PaRm1ulbqWp5SiauB8liu83cfjTFP9FN/view?usp=sharing' -L
   unzip banana-release.tar.gz
-  mkdir /usr/share/dse/banana-release/
-  cp -r /banana-release/. /usr/share/dse/banana-release/
+  mkdir /etc/dse/banana-release/
+  cp -r banana-release/. /etc/dse/banana-release/
 
   #tomcat server xml
   curl -O 'https://drive.google.com/file/d/1F-xJYOqsOYoZtu-RXSwrQh31Jm5rRVBC/view?usp=sharing' -L
-  cp -r server.xml /usr/share/dse/tomcat/
+  cp server.xml /etc/dse/tomcat/
   sudo service dse restart
 fi

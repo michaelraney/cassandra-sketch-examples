@@ -8,6 +8,6 @@ if [ `hostname` == 'node0' ]
 then
   curl -O 'https://drive.google.com/file/d/1ANt89ch9SfXfql96dXzmvRFP1rTwq3cn/view?usp=sharing' -L
   tar -zxvf zeppelin-0.7.1.tar
-  cp -r /notebook/. zeppelin-0.7.1/notebook/
+  cp -r notebook/. zeppelin-0.7.1/notebook/
   zeppelin-0.7.1/bin/zeppelin-daemon.sh start
 fi
