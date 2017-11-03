@@ -14,8 +14,8 @@ if [ `hostname` == 'node0' ]
 then
   curl -o banana-release.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/banana-release.tar.gz' -L
   tar -zxvf banana-release.tar.gz
-  sudo mkdir /etc/dse/banana-release/
-  sudo cp -r banana-release/. /etc/dse/banana-release/
+  sudo mkdir /usr/share/dse/banana-release/
+  sudo cp -r banana-release/. /usr/share/dse/banana-release/
 
   #tomcat server xml
   curl -o server.xml 'https://s3.amazonaws.com/dse-sketch-examples/server.xml' -L
