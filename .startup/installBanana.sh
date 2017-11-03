@@ -13,12 +13,12 @@
 if [ `hostname` == 'node0' ]
 then
   curl -o banana-release.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/banana-release.tar.gz' -L
-  unzip banana-release.tar.gz
-  mkdir /etc/dse/banana-release/
-  cp -r banana-release/. /etc/dse/banana-release/
+  tar -zxvf banana-release.tar.gz
+  sudo mkdir /etc/dse/banana-release/
+  sudo cp -r banana-release/. /etc/dse/banana-release/
 
   #tomcat server xml
-  curl -o server.xml '	https://s3.amazonaws.com/dse-sketch-examples/server.xml' -L
-  cp server.xml /etc/dse/tomcat/
-  service dse restart
+  curl -o server.xml 'https://s3.amazonaws.com/dse-sketch-examples/server.xml' -L
+  sudo cp server.xml /etc/dse/tomcat/conf
+  sudo service dse restart
 fi
