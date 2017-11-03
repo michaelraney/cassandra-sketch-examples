@@ -12,13 +12,13 @@
 # If we are on node0 install Banana, copy content, restart dse node.
 if [ `hostname` == 'node0' ]
 then
-  curl -o banana-release.tar.gz 'https://drive.google.com/uc?id=1PaRm1ulbqWp5SiauB8liu83cfjTFP9FN' -L
+  curl -o banana-release.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/banana-release.tar.gz' -L
   unzip banana-release.tar.gz
   mkdir /etc/dse/banana-release/
   cp -r banana-release/. /etc/dse/banana-release/
 
   #tomcat server xml
-  curl -o server.xml 'https://drive.google.com/uc?id=1F-xJYOqsOYoZtu-RXSwrQh31Jm5rRVBC' -L
+  curl -o server.xml '	https://s3.amazonaws.com/dse-sketch-examples/server.xml' -L
   cp server.xml /etc/dse/tomcat/
   service dse restart
 fi
