@@ -7,6 +7,7 @@
 if [ `hostname` == 'node0' ]
 then
   curl -o zeppelin-0.7.1.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/zeppelin-0.7.1-dse-5.1.1.tar.gz' -L
+
   tar -zxvf zeppelin-0.7.1.tar.gz
 
   #Zeppelin Notebook API.
@@ -17,6 +18,10 @@ then
 
   #XML Parser
   sudo apt-get install jq
+
+  #Initialize Zeppelin.
+  curl -o zepplinhome.out "http://34.214.105.123:8080/#/" -L
+  curl -o zepplininterp.out "http://34.214.105.123:8080/#/interpreter" -L
 
   #Cassandra interpreter id
   CASSANDRA_INTERP_ID=$(curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|.id' -r)
@@ -44,7 +49,7 @@ then
   curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/HyperLogLog/note.json \--header "Content-Type: application/json"
 
   sleep 5
-  
+
   zeppelin-0.7.1/bin/zeppelin-daemon.sh restart
 
   #Determine the localhost
