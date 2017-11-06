@@ -20,8 +20,8 @@ then
   sudo apt-get install jq
 
   #Initialize Zeppelin.
-  curl -o zepplinhome.out "http://localhost:8080/#/" -L
-  curl -o zepplininterp.out "http://localhost:8080/#/interpreter" -L
+  curl -o zepplinhome.out "http://localhost:8080/#/" -L -m 10
+  curl -o zepplininterp.out "http://localhost:8080/#/interpreter" -L -m 10
 
   #Cassandra interpreter id
   CASSANDRA_INTERP_ID=$(curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|.id' -r)
