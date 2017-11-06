@@ -43,7 +43,7 @@
       "title": "Add Spark Dependencies",
       "text": "%dep\n\n//Add these dependencies to the interpreter to make your life easier...\n\nz.reset()\nz.load(\"com.twitter:algebird-core_2.11:0.13.3\")\nz.load(\"org.apache.bahir:spark-streaming-twitter_2.10:2.1.0\")\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 11:11:31 PM",
+      "dateUpdated": "Nov 2, 2017 10:11:43 AM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -59,11 +59,22 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@205f682a\n"
+          }
+        ]
+      },
       "apps": [],
       "jobName": "paragraph_1509331920429_1370368905",
       "id": "20171029-225200_1695000914",
       "dateCreated": "Oct 29, 2017 10:52:00 PM",
-      "status": "READY",
+      "dateStarted": "Nov 2, 2017 10:11:44 AM",
+      "dateFinished": "Nov 2, 2017 10:11:49 AM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
@@ -98,9 +109,9 @@
     },
     {
       "title": "Create Table For Timeseries",
-      "text": "%cassandra\n\nCREATE TABLE approximations.cmsdata ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\n\n\n",
+      "text": "%cassandra\n\nCREATE TABLE  IF NOT EXISTS approximations.too ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\n\n\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:00:22 PM",
+      "dateUpdated": "Nov 2, 2017 2:42:51 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -121,7 +132,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE TABLE approximates.cmsdata ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE TABLE approximations.too ( id text, date text, batchTime timestamp, cmsStore blob, PRIMARY KEY ((id, date), batchTime));\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
           }
         ]
       },
@@ -129,16 +140,54 @@
       "jobName": "paragraph_1509130709153_-1109660634",
       "id": "20171027-145829_385231240",
       "dateCreated": "Oct 27, 2017 2:58:29 PM",
-      "dateStarted": "Oct 29, 2017 6:03:40 PM",
-      "dateFinished": "Oct 29, 2017 6:03:41 PM",
+      "dateStarted": "Nov 2, 2017 2:36:06 PM",
+      "dateFinished": "Nov 2, 2017 2:36:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "Create Search Index on Timeseries",
+      "text": "%cassandra\n\nCREATE SEARCH  INDEX IF NOT EXISTS ON approximations.too WITH COLUMNS batchtime;\n\nALTER SEARCH INDEX CONFIG ON  approximations.too SET realtime \u003d true;\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 2, 2017 2:42:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/undefined",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eALTER SEARCH INDEX CONFIG ON  approximations.too SET blah \u003d true;\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003elocalhost127.0.0.1:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1509631943213_1550634908",
+      "id": "20171102-101223_59689468",
+      "dateCreated": "Nov 2, 2017 10:12:23 AM",
+      "dateStarted": "Nov 2, 2017 2:41:01 PM",
+      "dateFinished": "Nov 2, 2017 2:41:01 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Process Stream and Perform CMS on each Window",
-      "text": "%spark\n\nimport com.twitter.algebird._\nimport com.twitter.algebird.CMSHasherImplicits._\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\nimport com.twitter.chill.ScalaKryoInstantiator\nimport java.text.SimpleDateFormat\n\n    //Spark Streaming\n    val batchIntervalSeconds \u003d 10\n    val minutesToStream \u003d 5\n    \n    @transient  val ssc \u003d new StreamingContext(sc, Seconds(batchIntervalSeconds))\n    \n    //https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/CountMinSketch.scala \n    // CMS parameters\n    \n    //A bound on the probability that a query estimate does not lie within \n    //some small interval (an interval that depends on `eps`) around the truth.\n    val DELTA \u003d 1E-3 \n    \n    //One-sided error bound on the error of each point query, i.e. frequency estimate.\n    val EPS \u003d 0.01 \n    \n    //A seed to initialize the random number generator used to create the pairwise independent hash functions.\n    val SEED \u003d 1 \n    \n    // heavyHittersPct: A threshold for finding heavy hitters, i.e., elements that appear\n    //at least (heavyHittersPct * totalCount) times in the stream.\n    val PERC \u003d 0.001 \n    \n    // val cms \u003d new CountMinSketchMonoid(EPS, DELTA, SEED, PERC)\n    // val cms \u003d NEW TopNCMS.monoid[Long](EPS, DELTA, SEED, N)\n    val cms \u003d TopPctCMS.monoid[String](EPS, DELTA, SEED, PERC)\n   \n    //Twitter Authentication\n    @transient val cb \u003d new ConfigurationBuilder();\n   \n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n    @transient val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val filters \u003d new Array[String](0)\n    \n    //Twitter Stream\n    @transient val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER_2)\n    \n    //Twitter UserIds in Batch of Tweets\n    @transient val users \u003d stream.map(status \u003d\u003e status.getUser.getName())\n\n    @transient  val approxTopUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e cms.create(id))\n    }).reduce(_ ++ _)\n\n    //Used to create bucketing for timeseries.\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n        \n    approxTopUsers.foreachRDD(rdd \u003d\u003e {\n      if (rdd.count() !\u003d 0) {\n        val now \u003d new Date()\n        \n        val partial \u003d rdd.first()\n        \n        val store \u003d ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)\n\n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, store)))\n        \n        oneWindowValue.saveToCassandra(\"approximations\", \"cmsdata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"cmsstore\"))\n\n        \n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//5 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n    ",
+      "text": "%spark\n\nimport com.twitter.algebird._\nimport com.twitter.algebird.CMSHasherImplicits._\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\nimport com.twitter.chill.ScalaKryoInstantiator\nimport java.text.SimpleDateFormat\n\n    //Spark Streaming\n    val batchIntervalSeconds \u003d 10\n    val minutesToStream \u003d 5\n    \n    @transient  val ssc \u003d new StreamingContext(sc, Seconds(batchIntervalSeconds))\n    \n    //https://github.com/twitter/algebird/blob/develop/algebird-core/src/main/scala/com/twitter/algebird/CountMinSketch.scala \n    // CMS parameters\n    \n    //A bound on the probability that a query estimate does not lie within \n    //some small interval (an interval that depends on `eps`) around the truth.\n    val DELTA \u003d 1E-3 \n    \n    //One-sided error bound on the error of each point query, i.e. frequency estimate.\n    val EPS \u003d 0.01 \n    \n    //A seed to initialize the random number generator used to create the pairwise independent hash functions.\n    val SEED \u003d 1 \n    \n    // heavyHittersPct: A threshold for finding heavy hitters, i.e., elements that appear\n    //at least (heavyHittersPct * totalCount) times in the stream.\n    val PERC \u003d 0.001 \n    \n    // val cms \u003d new CountMinSketchMonoid(EPS, DELTA, SEED, PERC)\n    // val cms \u003d NEW TopNCMS.monoid[Long](EPS, DELTA, SEED, N)\n    val cms \u003d TopPctCMS.monoid[String](EPS, DELTA, SEED, PERC)\n   \n    //Twitter Authentication\n    @transient val cb \u003d new ConfigurationBuilder();\n   \n    //BYO Credentials \n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n    @transient val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val filters \u003d new Array[String](0)\n    \n    //Twitter Stream\n    @transient val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER_2)\n    \n    //Twitter UserIds in Batch of Tweets\n    @transient val users \u003d stream.map(status \u003d\u003e status.getUser.getName())\n\n    @transient  val approxTopUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e cms.create(id))\n    }).reduce(_ ++ _)\n\n    //Used to create bucketing for timeseries.\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n        \n    approxTopUsers.foreachRDD(rdd \u003d\u003e {\n      if (rdd.count() !\u003d 0) {\n        val now \u003d new Date()\n        \n        val partial \u003d rdd.first()\n        \n        val store \u003d ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)\n\n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, store)))\n        \n        oneWindowValue.saveToCassandra(\"approximations\", \"cmsdata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"cmsstore\"))\n\n        \n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//5 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n    ",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:15:15 PM",
+      "dateUpdated": "Oct 30, 2017 9:46:54 AM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,

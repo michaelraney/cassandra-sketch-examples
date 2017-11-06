@@ -42,7 +42,7 @@
       "title": "Add Spark Dependencies",
       "text": "%dep\n\n//Add these dependencies to the interpreter to make your life easier...\n\nz.reset()\nz.load(\"com.twitter:algebird-core_2.11:0.13.3\")\nz.load(\"org.apache.bahir:spark-streaming-twitter_2.10:2.1.0\")\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:51:58 PM",
+      "dateUpdated": "Oct 30, 2017 10:18:52 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -59,11 +59,11 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "Must be used before SparkInterpreter (%spark) initialized\nHint: put this paragraph before any Spark code and restart Zeppelin/Interpreter"
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@7d5bb52a\n"
           }
         ]
       },
@@ -71,9 +71,9 @@
       "jobName": "paragraph_1509330774905_-706528084",
       "id": "20171029-223254_15426998",
       "dateCreated": "Oct 29, 2017 10:32:54 PM",
-      "dateStarted": "Oct 29, 2017 10:51:05 PM",
-      "dateFinished": "Oct 29, 2017 10:51:05 PM",
-      "status": "ERROR",
+      "dateStarted": "Oct 30, 2017 10:18:52 PM",
+      "dateFinished": "Oct 30, 2017 10:18:57 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
@@ -153,9 +153,36 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%spark\n\nimport com.twitter.algebird.HyperLogLog._\nimport com.twitter.algebird.HyperLogLogMonoid\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\n\n/**\n * Example of using HyperLogLog monoid from Twitter\u0027s Algebird together with Spark Streaming\u0027s\n * TwitterInputDStream\n */\n\n    /** Bit size parameter for HyperLogLog, trades off accuracy vs size */\n    val BIT_SIZE \u003d 12\n    \n    //Size of window in Stream Processing\n    val WINDOW_SIZE \u003d 10\n    val minutesToStream \u003d 1;\n    \n    val filters \u003d new Array[String](0)\n    \n    val cb \u003d new ConfigurationBuilder();\n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n   \n    val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val ssc \u003d new StreamingContext(sc, Seconds(WINDOW_SIZE))\n    \n    val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER)\n\n    val users \u003d stream.map(status \u003d\u003e status.getUser.getId)\n\n    val hll \u003d new HyperLogLogMonoid(BIT_SIZE)\n    \n    val approxUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e hll.create(id))\n    }).reduce(_ + _)\n\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n   \n    approxUsers.foreachRDD(rdd \u003d\u003e {\n      val totalInWindow \u003d rdd.count();\n      if (totalInWindow !\u003d 0) {\n       \n        val now \u003d new Date();\n       \n        val partial \u003d rdd.first()\n       \n        val uniqueperbatch \u003d partial.estimatedSize.toInt\n        \n        println(\"Total entries in this batch: %d\".format(totalInWindow))\n        println(\"Approx distinct users this batch: %d\".format(uniqueperbatch))\n        \n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, WINDOW_SIZE, totalInWindow, uniqueperbatch, toBytes(partial))))\n       \n        oneWindowValue.saveToCassandra(\"approximations\", \"hlldata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"batchwindow\", \"totalinwindow\", \"uniqueperbatch\", \"hllstore\"))\n\n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//2 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n",
+      "title": "Create Search Index for Timeseries",
+      "text": "%cassandra\n\nCREATE SEARCH  INDEX IF NOT EXISTS ON approximations.hlldata WITH COLUMNS batchtime;\n\nALTER SEARCH INDEX CONFIG ON  approximations.hlldata SET realtime \u003d true;",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:47:15 PM",
+      "dateUpdated": "Nov 2, 2017 2:43:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1509648176309_952768016",
+      "id": "20171102-144256_1684484170",
+      "dateCreated": "Nov 2, 2017 2:42:56 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nimport com.twitter.algebird.HyperLogLog._\nimport com.twitter.algebird.HyperLogLogMonoid\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\nimport org.apache.spark.streaming.twitter._\nimport twitter4j.conf.ConfigurationBuilder\nimport twitter4j.auth.OAuthAuthorization\nimport java.util.Date\nimport java.text.SimpleDateFormat\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\n\n/**\n * Example of using HyperLogLog monoid from Twitter\u0027s Algebird together with Spark Streaming\u0027s\n * TwitterInputDStream\n */\n\n    /** Bit size parameter for HyperLogLog, trades off accuracy vs size */\n    val BIT_SIZE \u003d 12\n    \n    //Size of window in Stream Processing\n    val WINDOW_SIZE \u003d 10\n    val minutesToStream \u003d 10;\n    \n    val filters \u003d new Array[String](0)\n    \n    //BYO Credentials\n    val cb \u003d new ConfigurationBuilder();\n    cb.setDebugEnabled(true)\n      .setOAuthConsumerKey(\"7foJQWMfxU9p6K70M0o716fFX\")\n      .setOAuthConsumerSecret(\"nGz5WyotqFtgKad928lWPHJBTPl0DH7StKaRAQqnkcYbcnzMGx\")\n      .setOAuthAccessToken(\"58465931-FBUb5th1TNcq1FwNopqy5WxLeV9zT845hSpGFPq9C\")\n      .setOAuthAccessTokenSecret(\"kGB1aGMWDwZKRxOx8QEmO2S0wB6x3RzV07hor3FIxVKkl\")\n  \n   \n    val auth \u003d new OAuthAuthorization(cb.build)\n    \n    val ssc \u003d new StreamingContext(sc, Seconds(WINDOW_SIZE))\n    \n    val stream \u003d TwitterUtils.createStream(ssc, Some(auth), filters, StorageLevel.MEMORY_ONLY_SER)\n\n    val users \u003d stream.map(status \u003d\u003e status.getUser.getId)\n\n    val hll \u003d new HyperLogLogMonoid(BIT_SIZE)\n    \n    val approxUsers \u003d users.mapPartitions(ids \u003d\u003e {\n      ids.map(id \u003d\u003e hll.create(id))\n    }).reduce(_ + _)\n\n    val todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n   \n    approxUsers.foreachRDD(rdd \u003d\u003e {\n      val totalInWindow \u003d rdd.count();\n      if (totalInWindow !\u003d 0) {\n       \n        val now \u003d new Date();\n       \n        val partial \u003d rdd.first()\n       \n        val uniqueperbatch \u003d partial.estimatedSize.toInt\n        \n       // println(\"Total entries in this batch: %d\".format(totalInWindow))\n        println(\"Approx distinct users this batch: %d\".format(uniqueperbatch))\n        \n        val oneWindowValue \u003d sc.parallelize(Seq((\"tweets\", todayAsString, now, WINDOW_SIZE, totalInWindow, uniqueperbatch, toBytes(partial))))\n       \n        oneWindowValue.saveToCassandra(\"approximations\", \"hlldata\", SomeColumns(\"id\", \"date\", \"batchtime\", \"batchwindow\", \"totalinwindow\", \"uniqueperbatch\", \"hllstore\"))\n\n      }\n    })\n\n\n    ssc.start()\n    ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//2 minutes...\n    ssc.stop(stopSparkContext \u003d false, stopGracefully\u003dtrue)\n    \n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 30, 2017 10:20:27 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -163,7 +190,7 @@
           "0": {
             "graph": {
               "mode": "table",
-              "height": 92.0,
+              "height": 1656.0,
               "optionOpen": false
             }
           }
@@ -183,7 +210,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport org.apache.spark.streaming.twitter._\n\nimport twitter4j.conf.ConfigurationBuilder\n\nimport twitter4j.auth.OAuthAuthorization\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\nTotal entries in this batch: 1\nApprox distinct users this batch: 230\nTotal entries in this batch: 1\nApprox distinct users this batch: 405\nTotal entries in this batch: 1\nApprox distinct users this batch: 282\nTotal entries in this batch: 1\nApprox distinct users this batch: 363\nTotal entries in this batch: 1\nApprox distinct users this batch: 380\nTotal entries in this batch: 1\nApprox distinct users this batch: 300\nTotal entries in this batch: 1\nApprox distinct users this batch: 101\n\n\n\n\n\n\n\n\n\nimport com.datastax.spark.connector.SomeColumns\nBIT_SIZE: Int \u003d 12\nWINDOW_SIZE: Int \u003d 10\nminutesToStream: Int \u003d 1\nfilters: Array[String] \u003d Array()\ncb: twitter4j.conf.ConfigurationBuilder \u003d twitter4j.conf.ConfigurationBuilder@37c72ac6\nauth: twitter4j.auth.OAuthAuthorization \u003d OAuthAuthorization{consumerKey\u003d\u00277foJQWMfxU9p6K70M0o716fFX\u0027, consumerSecret\u003d\u0027******************************************\u0027, oauthToken\u003dAccessToken{screenName\u003d\u0027null\u0027, userId\u003d58465931}}\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@276551e8\nstream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@36d6f165\nusers: org.apache.spark.streaming.dstream.DStream[Long] \u003d org.apache.spark.streaming.dst..."
+            "data": "\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport org.apache.spark.streaming.twitter._\n\nimport twitter4j.conf.ConfigurationBuilder\n\nimport twitter4j.auth.OAuthAuthorization\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\nApprox distinct users this batch: 46\nApprox distinct users this batch: 398\nApprox distinct users this batch: 366\nApprox distinct users this batch: 371\nApprox distinct users this batch: 379\nApprox distinct users this batch: 424\nApprox distinct users this batch: 351\nApprox distinct users this batch: 382\nApprox distinct users this batch: 359\nApprox distinct users this batch: 398\nApprox distinct users this batch: 342\nApprox distinct users this batch: 353\nApprox distinct users this batch: 377\nApprox distinct users this batch: 329\nApprox distinct users this batch: 342\nApprox distinct users this batch: 360\nApprox distinct users this batch: 337\nApprox distinct users this batch: 349\nApprox distinct users this batch: 322\nApprox distinct users this batch: 423\nApprox distinct users this batch: 361\nApprox distinct users this batch: 347\nApprox distinct users this batch: 341\nApprox distinct users this batch: 316\nApprox distinct users this batch: 389\nApprox distinct users this batch: 389\nApprox distinct users this batch: 335\nApprox distinct users this batch: 361\nApprox distinct users this batch: 381\nApprox distinct users this batch: 381\nApprox distinct users this batch: 414\nApprox distinct users this batch: 346\nApprox distinct users this batch: 387\nApprox distinct users this batch: 399\nApprox distinct users this batch: 315\nApprox distinct users this batch: 335\nApprox distinct users this batch: 402\nApprox distinct users this batch: 364\nApprox distinct users this batch: 402\nApprox distinct users this batch: 392\nApprox distinct users this batch: 340\nApprox distinct users this batch: 352\nApprox distinct users this batch: 351\nApprox distinct users this batch: 454\nApprox distinct users this batch: 379\nApprox distinct users this batch: 376\nApprox distinct users this batch: 363\nApprox distinct users this batch: 410\nApprox distinct users this batch: 348\nApprox distinct users this batch: 324\nApprox distinct users this batch: 392\nApprox distinct users this batch: 389\nApprox distinct users this batch: 329\nApprox distinct users this batch: 337\nApprox distinct users this batch: 326\nApprox distinct users this batch: 383\nApprox distinct users this batch: 352\nApprox distinct users this batch: 363\nApprox distinct users this batch: 386\nApprox distinct users this batch: 391\nApprox distinct users this batch: 291\n\n\n\n\n\n\n\n\n\nimport com.datastax.spark.connector.SomeColumns\nBIT_SIZE: Int \u003d 12\nWINDOW_SIZE: Int \u003d 10\nminutesToStream: Int \u003d 10\nfilters: Array[String] \u003d Array()\ncb: twitter4j.conf.ConfigurationBuilder \u003d twitter4j.conf.ConfigurationBuilder@23f91393\nauth: twitter4j.auth.OAuthAuthorization \u003d OAuthAuthorization{consumerKey\u003d\u00277foJQWMfxU9p6K70M0o716fFX\u0027, consumerSecret\u003d\u0027******************************************\u0027, oauthToken\u003dAccessToken{screenName\u003d\u0027null\u0027, userId\u003d58465931}}\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@3ceb7304\nstream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@23eedc50\nusers: org.apache.spark.streaming.dstream.DStream[Long] \u003d org.apache.spark.streaming.ds..."
           }
         ]
       },
@@ -191,15 +218,15 @@
       "jobName": "paragraph_1508869186050_-1220730212",
       "id": "20171024-141946_1818057078",
       "dateCreated": "Oct 24, 2017 2:19:46 PM",
-      "dateStarted": "Oct 29, 2017 10:47:15 PM",
-      "dateFinished": "Oct 29, 2017 10:48:50 PM",
+      "dateStarted": "Oct 30, 2017 10:19:58 PM",
+      "dateFinished": "Oct 30, 2017 10:30:30 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark\nimport com.datastax.spark.connector.streaming._\nimport com.datastax.spark.connector._\nimport com.datastax.spark.connector.SomeColumns\nimport com.datastax.spark.connector.rdd._\nimport org.apache.spark.SparkContext    \nimport org.apache.spark.SparkContext._\nimport org.apache.spark.SparkConf\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport com.twitter.algebird.HyperLogLog._\nimport com.twitter.algebird.HyperLogLogMonoid\nimport org.apache.log4j.{Level, Logger}\nimport com.twitter.algebird.HLL\nimport java.util.Date\nimport java.text.SimpleDateFormat\n\nval todayAsString \u003d new SimpleDateFormat(\"MM-dd-yyyy\").format(new Date())\n   \nval rdd  \u003d sc.cassandraTable[Array[Byte]](\"approximations\", \"hlldata\")\n              .select(\"hllstore\")\n              .where(\"id \u003d ?\", \"tweets\").where(\"date \u003d ?\", todayAsString)\n\nval approxUsers \u003d rdd.mapPartitions(ids \u003d\u003e {\n  ids.map(id \u003d\u003e fromBytes(id))\n}).reduce(_ + _)\n\nval hllagg \u003d approxUsers.estimatedSize.toInt\n\nprintln(\"Total For HLL:\"+hllagg)\n\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:49:06 PM",
+      "dateUpdated": "Oct 30, 2017 10:41:05 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -219,7 +246,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\n\nimport com.datastax.spark.connector.SomeColumns\n\nimport com.datastax.spark.connector.rdd._\n\nimport org.apache.spark.SparkContext\n\nimport org.apache.spark.SparkContext._\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport com.twitter.algebird.HLL\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\ntodayAsString: String \u003d 10-29-2017\n\nwarning: Class org.joda.convert.FromString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.FromString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nwarning: Class org.joda.convert.ToString not found - continuing with a stub.\n\nrdd: com.datastax.spark.connector.rdd.CassandraTableScanRDD[Array[Byte]] \u003d CassandraTableScanRDD[65] at RDD at CassandraRDD.scala:19\napproxUsers: com.twitter.algebird.HLL \u003d DenseHLL(12,Bytes(0,0,2,0,1,0,0,1,1,0,2,2,1,4,0,0,0,0,3,0,0,0,0,0,1,0,1,0,0,0,0,2,0,0,0,0,0,0,3,1,3,3,2,0,0,0,1,0,0,0,3,0,0,0,0,0,1,0,0,1,2,1,0,0,0,0,4,0,0,0,1,2,5,0,1,0,0,0,2,0,0,0,3,2,0,3,0,0,1,3,0,1,0,0,1,1,0,0,0,1,1,3,1,0,0,0,0,0,2,0,0,1,0,0,0,0,0,2,0,2,0,0,0,0,1,2,0,1,0,0,0,0,0,2,1,0,0,0,0,2,7,0,1,2,0,2,1,4,2,2,0,6,2,0,0,1,1,0,0,2,0,0,1,0,0,0,0,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,1,0,0,1,3,2,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,2,0,0,0,3,2,5,0,0,0,0,0,0,2,0,0,2,0,0,2,1,0,3,0,0,0,0,1,3,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,0,2,1,0,1,0,2,0,3,2,0,5,0,1,0,2,0,0,1,0,0,0,0,0,5,0,0,2,4,1,3,0,0,1,2,0,0,0,1,0,0,4,2,3,1,0,2,0,2,0,0,4,0,0,0,1,4,1,1,0,0,1,2,0,0,1,4,0,3,0,0,0,0,0,4,2,0,1,0,1,0,0,1,1,2,0,6,0,0,0,2,0,0,1,2,5,2,1,1,0,0,0,0...\nhllagg: Int \u003d 2061\nTotal For HLL:2061\n"
+            "data": "\nimport com.datastax.spark.connector.streaming._\n\nimport com.datastax.spark.connector._\n\nimport com.datastax.spark.connector.SomeColumns\n\nimport com.datastax.spark.connector.rdd._\n\nimport org.apache.spark.SparkContext\n\nimport org.apache.spark.SparkContext._\n\nimport org.apache.spark.SparkConf\n\nimport org.apache.spark.storage.StorageLevel\n\nimport org.apache.spark.streaming.{Seconds, StreamingContext}\n\nimport com.twitter.algebird.HyperLogLog._\n\nimport com.twitter.algebird.HyperLogLogMonoid\n\nimport org.apache.log4j.{Level, Logger}\n\nimport com.twitter.algebird.HLL\n\nimport java.util.Date\n\nimport java.text.SimpleDateFormat\n\ntodayAsString: String \u003d 10-30-2017\n\nrdd: com.datastax.spark.connector.rdd.CassandraTableScanRDD[Array[Byte]] \u003d CassandraTableScanRDD[448] at RDD at CassandraRDD.scala:19\napproxUsers: com.twitter.algebird.HLL \u003d DenseHLL(12,Bytes(5,2,2,3,10,1,2,4,3,6,6,6,5,3,6,3,4,4,6,4,6,5,4,7,5,8,7,6,2,4,4,7,5,5,4,5,3,2,1,4,5,2,6,5,5,5,7,4,3,3,2,4,8,5,3,3,6,3,3,3,3,5,4,4,4,4,3,2,3,3,2,5,3,4,8,6,4,8,1,4,6,3,5,3,3,4,3,4,4,5,5,9,6,4,9,4,9,4,7,4,5,5,3,8,5,4,3,5,7,3,5,5,9,1,6,2,4,5,2,4,4,2,3,5,6,2,7,5,10,4,4,9,6,5,3,3,2,5,5,6,3,4,2,4,3,4,4,5,3,5,3,2,5,3,7,6,5,4,4,4,5,4,7,4,2,2,3,4,6,3,6,3,5,3,5,5,4,4,7,5,3,7,6,5,4,2,6,5,1,4,3,2,7,3,4,3,3,6,5,5,4,2,4,2,5,5,2,7,3,6,3,8,4,5,3,5,6,3,5,3,7,4,4,5,4,4,4,3,4,5,4,5,3,3,8,2,4,2,3,6,2,5,3,2,2,4,6,4,3,7,10,8,3,8,5,13,2,5,2,5,4,4,5,5,5,4,4,2,6,4,4,5,3,5,7,4,3,6,10,5,8,5,6,3,3,3,4,3,3,7,10,7,2,3,5,4,2,7,5,5,5,7,5,6,5,4,6,3,5,3,5,5,5,5,7,2,3,3,4,4,7,8,3,4,4,6,3,4,5,4,4,4,3,4,6,5,5,5,6,3,3,2,4,4,5,4,4,3,7,5,4,5,10,5,3,7,3,5,6,5,5,3,5,4,3,5,...\nhllagg: Int \u003d 35613\nTotal For HLL:35613\n"
           }
         ]
       },
@@ -227,15 +254,15 @@
       "jobName": "paragraph_1509047873901_-397627896",
       "id": "20171026-155753_802562419",
       "dateCreated": "Oct 26, 2017 3:57:53 PM",
-      "dateStarted": "Oct 29, 2017 10:49:06 PM",
-      "dateFinished": "Oct 29, 2017 10:49:10 PM",
+      "dateStarted": "Oct 30, 2017 10:41:05 PM",
+      "dateFinished": "Oct 30, 2017 10:41:09 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%cassandra\n\nSELECT * FROM approximations.hlldata WHERE id \u003d \u0027tweets\u0027 ALLOW FILTERING;",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 10:50:04 PM",
+      "dateUpdated": "Oct 30, 2017 10:22:29 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -292,7 +319,7 @@
         "msg": [
           {
             "type": "TABLE",
-            "data": "id\tdate\tbatchtime\tbatchwindow\thllstore\ttotalinwindow\tuniqueperbatch\ntweets\t10-29-2017\tSun Oct 29 22:47:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d674 cap\u003d674]\t1\t230\ntweets\t10-29-2017\tSun Oct 29 22:47:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t405\ntweets\t10-29-2017\tSun Oct 29 22:47:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t282\ntweets\t10-29-2017\tSun Oct 29 22:48:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t363\ntweets\t10-29-2017\tSun Oct 29 22:48:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t380\ntweets\t10-29-2017\tSun Oct 29 22:48:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\t1\t300\ntweets\t10-29-2017\tSun Oct 29 22:48:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d302 cap\u003d302]\t1\t101\n"
+            "data": "id\tdate\tbatchtime\tbatchwindow\thllstore\tsolr_query\ttotalinwindow\tuniqueperbatch\ntweets\t10-29-2017\tSun Oct 29 22:47:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d674 cap\u003d674]\tnull\t1\t230\ntweets\t10-29-2017\tSun Oct 29 22:47:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t405\ntweets\t10-29-2017\tSun Oct 29 22:47:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t282\ntweets\t10-29-2017\tSun Oct 29 22:48:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t363\ntweets\t10-29-2017\tSun Oct 29 22:48:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t380\ntweets\t10-29-2017\tSun Oct 29 22:48:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t300\ntweets\t10-29-2017\tSun Oct 29 22:48:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d302 cap\u003d302]\tnull\t1\t101\ntweets\t10-30-2017\tMon Oct 30 12:14:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t352\ntweets\t10-30-2017\tMon Oct 30 12:14:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t467\ntweets\t10-30-2017\tMon Oct 30 12:14:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t428\ntweets\t10-30-2017\tMon Oct 30 12:14:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t440\ntweets\t10-30-2017\tMon Oct 30 12:14:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t432\ntweets\t10-30-2017\tMon Oct 30 12:15:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t435\ntweets\t10-30-2017\tMon Oct 30 12:15:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t513\ntweets\t10-30-2017\tMon Oct 30 12:15:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t486\ntweets\t10-30-2017\tMon Oct 30 12:15:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t520\ntweets\t10-30-2017\tMon Oct 30 12:15:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t428\ntweets\t10-30-2017\tMon Oct 30 12:15:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t482\ntweets\t10-30-2017\tMon Oct 30 12:16:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t459\ntweets\t10-30-2017\tMon Oct 30 12:16:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t501\ntweets\t10-30-2017\tMon Oct 30 12:16:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t485\ntweets\t10-30-2017\tMon Oct 30 12:16:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t503\ntweets\t10-30-2017\tMon Oct 30 12:16:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t450\ntweets\t10-30-2017\tMon Oct 30 12:16:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t472\ntweets\t10-30-2017\tMon Oct 30 12:17:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t437\ntweets\t10-30-2017\tMon Oct 30 12:17:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t468\ntweets\t10-30-2017\tMon Oct 30 12:17:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t455\ntweets\t10-30-2017\tMon Oct 30 12:17:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t459\ntweets\t10-30-2017\tMon Oct 30 12:17:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t485\ntweets\t10-30-2017\tMon Oct 30 12:17:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t410\ntweets\t10-30-2017\tMon Oct 30 12:18:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t475\ntweets\t10-30-2017\tMon Oct 30 12:18:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t464\ntweets\t10-30-2017\tMon Oct 30 12:18:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t464\ntweets\t10-30-2017\tMon Oct 30 12:18:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t428\ntweets\t10-30-2017\tMon Oct 30 12:18:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t442\ntweets\t10-30-2017\tMon Oct 30 12:18:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t443\ntweets\t10-30-2017\tMon Oct 30 12:19:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t433\ntweets\t10-30-2017\tMon Oct 30 12:19:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d296 cap\u003d296]\tnull\t1\t99\ntweets\t10-30-2017\tMon Oct 30 22:20:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d140 cap\u003d140]\tnull\t1\t46\ntweets\t10-30-2017\tMon Oct 30 22:20:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t398\ntweets\t10-30-2017\tMon Oct 30 22:20:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t366\ntweets\t10-30-2017\tMon Oct 30 22:20:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t371\ntweets\t10-30-2017\tMon Oct 30 22:20:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t379\ntweets\t10-30-2017\tMon Oct 30 22:21:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t424\ntweets\t10-30-2017\tMon Oct 30 22:21:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t351\ntweets\t10-30-2017\tMon Oct 30 22:21:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t382\ntweets\t10-30-2017\tMon Oct 30 22:21:30 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t359\ntweets\t10-30-2017\tMon Oct 30 22:21:40 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t398\ntweets\t10-30-2017\tMon Oct 30 22:21:50 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t342\ntweets\t10-30-2017\tMon Oct 30 22:22:00 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t353\ntweets\t10-30-2017\tMon Oct 30 22:22:10 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t377\ntweets\t10-30-2017\tMon Oct 30 22:22:20 EDT 2017\t10\tjava.nio.HeapByteBuffer[pos\u003d0 lim\u003d4098 cap\u003d4098]\tnull\t1\t329\n"
           }
         ]
       },
@@ -300,8 +327,8 @@
       "jobName": "paragraph_1508888237215_947822464",
       "id": "20171024-193717_1816755798",
       "dateCreated": "Oct 24, 2017 7:37:17 PM",
-      "dateStarted": "Oct 29, 2017 10:49:49 PM",
-      "dateFinished": "Oct 29, 2017 10:49:49 PM",
+      "dateStarted": "Oct 30, 2017 10:22:29 PM",
+      "dateFinished": "Oct 30, 2017 10:22:29 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
