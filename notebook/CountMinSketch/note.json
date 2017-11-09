@@ -3,7 +3,7 @@
     {
       "text": "%md\n\n# Count Min Sketch\n\nHelpful in finding the frequency of items in a stream of data.  In the following example we will take a look at estimating the frequency of the top 10 tweeters in streaming application. \n\nPushing the distribution calculation of a single window to a timeseries data structure in DSE we can discover frequency across any time range. \n\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 9:26:24 PM",
+      "dateUpdated": "Nov 8, 2017 5:03:44 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -21,14 +21,22 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eCount Min Sketch\u003c/h1\u003e\n\u003cp\u003eHelpful in finding the frequency of items in a stream of data. In the following example we will take a look at estimating the frequency of the top 10 tweeters in streaming application. \u003c/p\u003e\n\u003cp\u003ePushing the distribution calculation of a single window to a timeseries data structure in DSE we can discover frequency across any time range.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
       "apps": [],
       "jobName": "paragraph_1509321292317_1159257553",
       "id": "20171029-195452_1404958465",
       "dateCreated": "Oct 29, 2017 7:54:52 PM",
-      "dateStarted": "Oct 29, 2017 9:26:24 PM",
-      "dateFinished": "Oct 29, 2017 9:26:24 PM",
+      "dateStarted": "Nov 8, 2017 5:03:44 PM",
+      "dateFinished": "Nov 8, 2017 5:03:45 PM",
       "status": "FINISHED",
-      "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {

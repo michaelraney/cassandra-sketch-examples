@@ -1,2 +1,3 @@
+setupTables.sh
 installZeppelin.sh
 installBanana.sh

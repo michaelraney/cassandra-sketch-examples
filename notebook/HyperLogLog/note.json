@@ -3,7 +3,7 @@
     {
       "text": "%md\n# HyperLogLog\n\nHyperloglog addresses the problem in determining cardinality on large datasets. Usefull for efficiantly summerizing streams of data such as number of unique visitors of a website or counting ad impressions.\n\n",
       "user": "anonymous",
-      "dateUpdated": "Oct 29, 2017 9:59:07 PM",
+      "dateUpdated": "Nov 8, 2017 5:05:05 PM",
       "config": {
         "colWidth": 12.0,
         "enabled": true,
@@ -20,14 +20,22 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eHyperLogLog\u003c/h1\u003e\n\u003cp\u003eHyperloglog addresses the problem in determining cardinality on large datasets. Usefull for efficiantly summerizing streams of data such as number of unique visitors of a website or counting ad impressions.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
       "apps": [],
       "jobName": "paragraph_1509328591687_-1932585205",
       "id": "20171029-215631_784415406",
       "dateCreated": "Oct 29, 2017 9:56:31 PM",
-      "dateStarted": "Oct 29, 2017 9:59:07 PM",
-      "dateFinished": "Oct 29, 2017 9:59:07 PM",
+      "dateStarted": "Nov 8, 2017 5:05:05 PM",
+      "dateFinished": "Nov 8, 2017 5:05:05 PM",
       "status": "FINISHED",
-      "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
