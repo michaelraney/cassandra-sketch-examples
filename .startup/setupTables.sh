@@ -4,5 +4,5 @@
 #
 
 if [ `hostname` == 'node0' ]
-   cqlsh -f setupTables.cql node0
+   cqlsh node0 -f setupTables.cql
 fi
