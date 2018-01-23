@@ -1,3 +1,4 @@
-setupTables.sh
+hugo
 installZeppelin.sh
+setupTables.sh
 installBanana.sh
