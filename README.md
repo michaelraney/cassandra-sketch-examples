@@ -7,7 +7,7 @@
 ## Probabilistic data structures in space time accuracy tradeoffs. 
  In systems architecture, we have several design tradeoffs to efficiently guide our technology choices for enterprise solutions.  When reviewing these types of tradeoffs, it's important to note that tradeoffs are not absolutes, but guidelines to what will be simple and what will be complex. Probabilistic data structures trade accuracy with a margin of error while making use of a finite space and short amount of time. This is the proven solution for determining trends and frequency distribution at scale. 
 
-![alt text](https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/space-time-accuracy-tradeoff.png "")
+![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/images/space-time-accuracy-tradeoff.png "Data Processing Tradeoffs")
 
 ### Pick two and let's go
 Imagine you have exponentially growing data feeds consisting of multiple terabytes of detailed user interactions coming in to your system everyday. Since the business requires the technology to provide business action on insights for data in-flight, would you accept a 2% margin of error for predictable, scalable, and efficient performance? Most often the answer is Yes! 
@@ -19,7 +19,7 @@ When performing approximations on streaming data, you are performing an approxim
 The probabilistic data structures are associative in nature. Associative property states that you can add or multiply regardless of how numbers are grouped. For example, if we store the approximation calculations in a time-series of 3 second intervals, using the associative properties of the data structure, we can later group the results to expand the calculations to larger time spans of 3 minutes, 3 hours, 3 months, 3 years, etc. 
 
 ![alt text](
-https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Approximations-timeseries.png "Timeseries")
+https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/images/Approximations-timeseries.png "Timeseries")
 
 ## Sketch Examples
 ### HyperLogLog
@@ -33,7 +33,7 @@ https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Appr
 * Sketch Library - A library which provides abstractions for abstract algebra in the Scala programming language. In this example we will use Algebird, but from a Datastax perspective we are not limited to a specific sketching library. 
 
 ![alt text](
-https://github.com/michaelraney/datastax-sketch-examples/blob/master/images/Architecture.png "Architecture")
+https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/images/Architecture.png "Architecture")
 
 ## How To Use Examples
 
