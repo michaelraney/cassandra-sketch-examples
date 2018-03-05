@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.dse.se.</groupId>
+  <artifactId>dse-sketching-streaming-job</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>dse-sketching-streaming-job</name>
+  <url>http://maven.apache.org</url>
+
+
+  <properties>
+    <java.version>1.8</java.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>2.11.8</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.datastax.dse</groupId>
+      <artifactId>dse-spark-dependencies</artifactId>
+      <version>5.1.2</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.datastax.dse</groupId>
+          <artifactId>dse-java-driver-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.solr</groupId>
+          <artifactId>solr-solrj</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.twitter/algebird-core -->
+    <dependency>
+      <groupId>com.twitter</groupId>
+      <artifactId>algebird-core_2.11</artifactId>
+      <version>0.13.4</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.bahir/spark-streaming-twitter -->
+    <dependency>
+      <groupId>org.apache.bahir</groupId>
+      <artifactId>spark-streaming-twitter_2.11</artifactId>
+      <version>2.2.0</version>
+    </dependency>
+
+
+
+  </dependencies>
+  <build>
+    <finalName>dse-sketching-streaming-job</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <useSystemClassLoader>false</useSystemClassLoader>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>create-my-bundle</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>scala-tools.org</id>
+      <name>Scala-tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <repositories>
+    <repository>
+      <id>DataStax-Repo</id>
+      <url>https://datastax.artifactoryonline.com/datastax/public-repos/</url>
+    </repository>
+  </repositories>
+
+</project>
