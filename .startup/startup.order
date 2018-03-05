@@ -2,3 +2,4 @@ hugo
 installZeppelin.sh
 setupTables.sh
 installBanana.sh
+streaming.sh
