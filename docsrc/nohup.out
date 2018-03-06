@@ -37,3 +37,27 @@ Built site for language en:
 0 tags created
 0 categories created
 total in 14 ms
+Error: Unable to find theme Directory: /tmp/datastax-sketch-examples/docsrc/themes/hugo-material-docs
+
+Started building sites ...
+ERROR 2018/03/05 22:35:48 failed to parse page metadata for index.md: yaml: line 2: mapping values are not allowed in this context
+Error: Error building site: Errors reading pages: Error: failed to parse page metadata for index.md: yaml: line 2: mapping values are not allowed in this context for index.md
+Started building sites ...
+ERROR 2018/03/05 22:36:38 failed to parse page metadata for index.md: yaml: line 2: mapping values are not allowed in this context
+Error: Error building site: Errors reading pages: Error: failed to parse page metadata for index.md: yaml: line 2: mapping values are not allowed in this context for index.md
+Started building sites ...
+Built site for language en:
+0 draft content
+0 future content
+0 expired content
+3 regular pages created
+10 other pages created
+0 non-page files copied
+0 paginator pages created
+0 tags created
+0 categories created
+total in 7 ms
+Watching for changes in /tmp/datastax-sketch-examples/docsrc/{content,static,themes}
+Serving pages from memory
+Web Server is available at http://54.186.125.96:1313/ (bind address 0.0.0.0)
+Press Ctrl+C to stop
