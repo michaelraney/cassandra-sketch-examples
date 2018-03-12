@@ -1,6 +1,5 @@
 hugo
 setupTables.sh
-installBanana.sh
 installZeppelin.sh
 streaming.sh
 trendingWebApp.sh
