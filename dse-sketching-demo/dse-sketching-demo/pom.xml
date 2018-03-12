@@ -74,7 +74,7 @@
 
   </dependencies>
   <build>
-    <finalName>solr-schema-editor</finalName>
+    <finalName>dse-sketching-demo</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>

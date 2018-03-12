@@ -12,7 +12,7 @@ public class DataStaxSessionFactory {
 
     public static DataStaxSessionFactory instance;
 
-    public String seedNode = "127.0.0.1";
+    public String seedNode = "node0";
 
     private DseSession session;
 
