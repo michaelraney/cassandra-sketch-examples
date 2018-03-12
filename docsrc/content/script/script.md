@@ -1,5 +1,4 @@
 ---
-date: 2018-03-16T22:35:05-04:00
 title: Script
 menu:
   main:

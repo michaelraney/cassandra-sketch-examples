@@ -1,6 +1,4 @@
 ---
-=======
-date: 2019-03-05T21:52:39
 title: "What's Trending: DataStax Sketching Examples"
 type: index
 weight: 0
