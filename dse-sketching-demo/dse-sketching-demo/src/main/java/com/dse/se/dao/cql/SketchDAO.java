@@ -40,11 +40,10 @@ public class SketchDAO implements ISketchDAO {
 
         String today = dateformat.format(new Date());
 
-        PreparedStatement prepared = session.prepare(
-                "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
 
+        PreparedStatement preparedUniqueUsersForToday = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersForToday();
 
-        BoundStatement bound = prepared.bind("tweets",  today);
+        BoundStatement bound = preparedUniqueUsersForToday.bind("tweets",  "03-08-2018");
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -79,10 +78,10 @@ public class SketchDAO implements ISketchDAO {
         String today = dateformat.format(new Date());
 
 
-        PreparedStatement prepared = session.prepare(
-                "select batchtime, uniqueperbatch from approximations.hlldata10min where id = ? and date = ?");
+        PreparedStatement preparedUniqueUsersRollup = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersRollup();
 
-        BoundStatement bound = prepared.bind("tweets",  today);
+
+        BoundStatement bound = preparedUniqueUsersRollup.bind("tweets",   "03-08-2018");
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -116,10 +115,10 @@ public class SketchDAO implements ISketchDAO {
 
         String today = dateformat.format(new Date());
 
-        PreparedStatement prepared = session.prepare(
-                "select batchtime, preview from approximations.cmsdata10min where id = ? and date = ? limit 1");
 
-        BoundStatement bound = prepared.bind("tweets", today);
+        PreparedStatement preparedTopTweetsRollup = DataStaxSessionFactory.getInstance().getPreparedTopTweetsRollup();
+
+        BoundStatement bound = preparedTopTweetsRollup.bind("tweets",  "03-08-2018");
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);

@@ -194,13 +194,21 @@
                  dataType: "json"
              }).success(function (dto) {
 
-                 // Refresh UI Data
-                 refreshUniqueUserTable(dto.approximates);
 
-                 //console.log("Result=" + JSON.stringify(dto));
+                 if(dto.approximates) {
+                     if (dto.approximates != null) {
+                         if (dto.approximates.length > 0) {
+                             refreshUniqueUserTable(dto.approximates);
+                         }
+                     }else{
+                         console.log("getUniqueUsersForToday:" + JSON.stringify(dto))
+                     }
+                 }else{
+                     console.log("getUniqueUsersForToday:" + JSON.stringify(dto))
+                 }
 
-                 // refreshAccountTable(dto);
-                 // refreshDetailsTable(dto);
+                 $("#uniqueUserQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
              }).complete(function (dto) {
                  // Recursive Poll
                  pollUniqueUsers();// Call poll after complete
@@ -244,10 +252,23 @@
                                 dataType: "json"
                             }).success(function (dto) {
 
-                                // Refresh UI Data
-                                refreshUniqueUserTableRollup(dto.approximates);
 
-                                console.log("Result=" + JSON.stringify(dto));
+                                // Refresh UI Data
+                                if(dto.approximates) {
+                                    if (dto.approximates != null) {
+                                        if (dto.approximates.length > 0) {
+                                            refreshUniqueUserTableRollup(dto.approximates);
+                                        }
+                                    }else{
+                                        console.log("getUniqueUsersRollup:" + JSON.stringify(dto))
+                                    }
+                                }else{
+                                    console.log("getUniqueUsersRollup:" + JSON.stringify(dto))
+                                }
+
+
+                                $("#uniqueUserRollupQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
 
                                 // refreshAccountTable(dto);
                                 // refreshDetailsTable(dto);
@@ -255,7 +276,7 @@
                                 // Recursive Poll
                                 pollUniqueUsersRollup();// Call poll after complete
                             });
-                        }, 5000);//two seconds
+                        }, 5000);//ten seconds
                     }
                     function refreshUniqueUserTableRollup(data) {
 
@@ -294,10 +315,25 @@
                                 dataType: "json"
                             }).success(function (dto) {
 
-                                // Refresh UI Data
-                                formatTableResult(dto.topTags);
+
+
 
                                 //console.log("Result=" + JSON.stringify(dto));
+
+                                if(dto.topTags) {
+                                    if (dto.topTags != null) {
+                                        formatTableResult(dto.topTags);
+
+                                    }else{
+                                        console.log("getTopTweetsRollup:" + JSON.stringify(dto))
+                                    }
+                                }else{
+                                    console.log("getTopTweetsRollup:" + JSON.stringify(dto))
+                                }
+                                $("#topTweetsQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
+                                // Refresh UI Data
+
 
                                 // refreshAccountTable(dto);
                                 // refreshDetailsTable(dto);
@@ -380,7 +416,7 @@
                         <div id="mygraph">
 
                         </div>
-                    <!--<div class="panel-footer">Panel Footer</div>-->
+                        <div class="panel-footer"><label id="uniqueUserQueryTime"></label></div>
                 </div>
             </div>
         </div>
@@ -402,10 +438,20 @@
                                     <table id="toptagstable" class="table table-sm table-hover borderless setoptagstable">
                                     </table>
                                 </td>
+
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="panel-footer">
+                        <table>
+                            <tr>
+                                <td style="width:500px"><label id="uniqueUserRollupQueryTime"></label></td>
+                                <td><label id="topTweetsQueryTime"></label></td>
                             </tr>
                         </table>
-                    </div>
-                   <!-- <div class="panel-footer">Panel Footer</div>-->
+                     </div>
                 </div>
             </div>
         </div>

@@ -45,6 +45,8 @@ class TwitterSteamCountMinSketch extends Serializable {
       val cms = TopPctCMS.monoid[String](EPS, DELTA, SEED, PERC)
 
 
+
+
       //Twitter UserIds in Batch of Tweets
       val users = stream.map(status => status.getHashtagEntities)
         .flatMap(x => x)
@@ -59,9 +61,10 @@ class TwitterSteamCountMinSketch extends Serializable {
       val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
       approxTopUsers.foreachRDD(rdd => {
-        if (rdd.count() != 0) {
-          val now = new Date()
 
+        val now = new Date()
+
+        try {
           val partial = rdd.first()
 
           val store = ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)
@@ -69,7 +72,18 @@ class TwitterSteamCountMinSketch extends Serializable {
           val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, store)))
 
           oneWindowValue.saveToCassandra("approximations", "cmsdata", SomeColumns("id", "date", "batchtime", "cmsstore"))
+        } catch {
+          case unknown: Throwable => {
+            println(s"Unknown exception: $unknown")
 
+            val partial = cms.empty;
+
+            val store = ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)
+
+            val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, store)))
+
+            oneWindowValue.saveToCassandra("approximations", "cmsdata", SomeColumns("id", "date", "batchtime", "cmsstore"))
+          }
 
         }
       })

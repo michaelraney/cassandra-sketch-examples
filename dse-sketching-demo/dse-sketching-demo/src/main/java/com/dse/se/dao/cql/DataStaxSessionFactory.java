@@ -18,7 +18,10 @@ public class DataStaxSessionFactory {
 
     private DataStaxSessionFactory(){}
 
-    private PreparedStatement getUniqueUsersForToday;
+    private PreparedStatement preparedUniqueUsersForToday ;
+    private PreparedStatement preparedUniqueUsersRollup ;
+
+    private PreparedStatement preparedTopTweetsRollup ;
 
     public static DataStaxSessionFactory getInstance() {
         if(instance == null){
@@ -57,8 +60,6 @@ public class DataStaxSessionFactory {
 
                  session = cluster.connect();                                      // (2)
 
-                 getUniqueUsersForToday = session.prepare(
-                        "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
 
                 //Row row = session.execute("select release_version from system.local").one(); // (3)
                 // System.out.println(row.getString("release_version"));                        // (4)
@@ -69,6 +70,47 @@ public class DataStaxSessionFactory {
         return session;
     }
 
+    public PreparedStatement getPreparedUniqueUsersForToday(){
+        if(preparedUniqueUsersForToday == null){
+            preparedUniqueUsersForToday = getOrCreatePreparedUniqueUsersForToday();
+        }
+        return preparedUniqueUsersForToday;
+    }
+    private synchronized PreparedStatement getOrCreatePreparedUniqueUsersForToday(){
+        if(preparedUniqueUsersForToday == null){
+             preparedUniqueUsersForToday = getSession().prepare(
+                    "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
+        }
+        return preparedUniqueUsersForToday;
+    }
+
+    public PreparedStatement getPreparedUniqueUsersRollup(){
+        if(preparedUniqueUsersRollup == null){
+            preparedUniqueUsersRollup = getOrCreatePreparedUniqueUsersRollup();
+        }
+        return preparedUniqueUsersRollup;
+    }
+    private synchronized PreparedStatement getOrCreatePreparedUniqueUsersRollup(){
+        if(preparedUniqueUsersRollup == null){
+            preparedUniqueUsersRollup = getSession().prepare(
+                    "select batchtime, uniqueperbatch from approximations.hlldata10min where id = ? and date = ?");
+        }
+        return preparedUniqueUsersRollup;
+    }
+
+    public PreparedStatement getPreparedTopTweetsRollup(){
+        if(preparedTopTweetsRollup == null){
+            preparedTopTweetsRollup = getOrCreatePreparedTopTweetsRollup();
+        }
+        return preparedTopTweetsRollup;
+    }
+    private synchronized PreparedStatement getOrCreatePreparedTopTweetsRollup(){
+        if(preparedTopTweetsRollup == null){
+            preparedTopTweetsRollup = getSession().prepare(
+                    "select batchtime, preview from approximations.cmsdata10min where id = ? and date = ? limit 1");
+        }
+        return preparedTopTweetsRollup;
+    }
 
 
 }
