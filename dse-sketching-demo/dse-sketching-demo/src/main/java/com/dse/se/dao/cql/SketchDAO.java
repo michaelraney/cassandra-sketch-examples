@@ -43,7 +43,7 @@ public class SketchDAO implements ISketchDAO {
 
         PreparedStatement preparedUniqueUsersForToday = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersForToday();
 
-        BoundStatement bound = preparedUniqueUsersForToday.bind("tweets",  "03-08-2018");
+        BoundStatement bound = preparedUniqueUsersForToday.bind("tweets",  today);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -81,7 +81,7 @@ public class SketchDAO implements ISketchDAO {
         PreparedStatement preparedUniqueUsersRollup = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersRollup();
 
 
-        BoundStatement bound = preparedUniqueUsersRollup.bind("tweets",   "03-08-2018");
+        BoundStatement bound = preparedUniqueUsersRollup.bind("tweets",  today);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -118,7 +118,7 @@ public class SketchDAO implements ISketchDAO {
 
         PreparedStatement preparedTopTweetsRollup = DataStaxSessionFactory.getInstance().getPreparedTopTweetsRollup();
 
-        BoundStatement bound = preparedTopTweetsRollup.bind("tweets",  "03-08-2018");
+        BoundStatement bound = preparedTopTweetsRollup.bind("tweets", today);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
