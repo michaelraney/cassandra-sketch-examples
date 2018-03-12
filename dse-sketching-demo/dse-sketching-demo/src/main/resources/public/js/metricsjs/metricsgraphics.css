@@ -1,6 +1,6 @@
 .mg-active-datapoint {
     fill: black;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 400;
     opacity: 0.8;
 }
@@ -66,13 +66,13 @@ text.mg-barplot-group-label {
 
 .mg-baselines text {
     fill: black;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     opacity: 0.6;
     stroke: none;
 }
 
 .mg-baselines-small text {
-    font-size: 0.6rem;
+    font-size: 1.2rem;
 }
 
 .mg-category-guides line {
@@ -101,7 +101,7 @@ text.mg-barplot-group-label {
 }
 
 .mg-popover {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
 }
 
 .mg-popover-content {
@@ -111,12 +111,13 @@ text.mg-barplot-group-label {
 
 .mg-data-table {
     margin-top: 30px;
+
 }
 
 .mg-data-table thead tr th {
     border-bottom: 1px solid darkgray;
     cursor: default;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: normal;
     padding: 5px 5px 8px 5px;
     text-align: right;
@@ -128,7 +129,7 @@ text.mg-barplot-group-label {
 }
 
 .mg-data-table thead tr th .popover {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: normal;
 }
 
@@ -227,7 +228,7 @@ tspan.hist-symbol {
 }
 
 .mg-line-legend text {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 300;
     stroke: none;
 }
@@ -271,7 +272,7 @@ tspan.hist-symbol {
 
 .mg-markers text {
     fill: black;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     opacity: 0.6;
 }
 
@@ -309,7 +310,7 @@ path.mg-confidence-band {
 path.mg-main-line {
     fill: none;
     opacity: 0.8;
-    stroke-width: 1.1px;
+    stroke-width: 1.2px;
 }
 
 .mg-points circle {
@@ -357,14 +358,14 @@ tspan.mg-points-mono {
 .mg-y-axis text,
 .mg-histogram .axis text {
     fill: black;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     opacity: 0.6;
 }
 
 .mg-x-axis .label,
 .mg-y-axis .label,
 .mg-axis .label {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
     font-weight: 400;
 }
@@ -372,12 +373,12 @@ tspan.mg-points-mono {
 .mg-x-axis-small text,
 .mg-y-axis-small text,
 .mg-active-datapoint-small {
-    font-size: 0.6rem;
+    font-size: 1.2rem;
 }
 
 .mg-x-axis-small .label,
 .mg-y-axis-small .label {
-    font-size: 0.65rem;
+    font-size: 1.2rem;
 }
 
 .mg-european-hours {
@@ -385,7 +386,7 @@ tspan.mg-points-mono {
 
 .mg-year-marker text {
     fill: black;
-    font-size: 0.7rem;
+    font-size: 1.2rem;
     opacity: 0.6;
 }
 
@@ -397,5 +398,5 @@ tspan.mg-points-mono {
 }
 
 .mg-year-marker-small text {
-    font-size: 0.6rem;
+    font-size: 1.2rem;
 }

@@ -63,9 +63,16 @@ class RollupTopHashTags extends Serializable {
 
           val store = ScalaKryoInstantiator.defaultPool.toBytesWithClass(line._2)
 
-          val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, line._1, store)))
+          val globalTopK = line._2.heavyHitters.map(id =>
+            (id, line._2.frequency(id).estimate)).toSeq.sortBy(_._2).reverse.slice(0, 30)
 
-          oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore"))
+          //val maymap1 = globalTopK.heavyHitters.map(id =>(id,  globalTopK.frequency(id).estimate))
+
+          val previewResults = globalTopK.map(a => a._1 -> a._2).toMap
+
+          val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, line._1, store, previewResults)))
+
+          oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore", "preview"))
 
         })
 

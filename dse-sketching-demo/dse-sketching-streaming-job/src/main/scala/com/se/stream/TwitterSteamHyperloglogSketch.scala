@@ -41,7 +41,36 @@ class TwitterSteamHyperloglogSketch extends Serializable {
     val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
     approxUsers.foreachRDD(rdd => {
-      val totalInWindow = rdd.count();
+
+      val now = new Date();
+
+      try
+      {
+        val partial = rdd.first()
+
+        val uniqueperbatch = partial.estimatedSize.toInt
+
+        val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, WINDOW_SIZE, 1, uniqueperbatch, toBytes(partial))))
+
+        oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
+
+      }
+      catch
+        {
+          case unknown: Throwable => {
+
+            println(s"Unknown exception: $unknown")
+            val partial = hll.zero;
+            val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, WINDOW_SIZE, 1, 0, toBytes(partial))))
+            oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
+          }
+        }
+      finally
+      {
+        // your scala code here, such as to close a database connection
+      }
+
+      /*val totalInWindow = rdd.count();
       if (totalInWindow != 0) {
 
         val now = new Date();
@@ -54,7 +83,7 @@ class TwitterSteamHyperloglogSketch extends Serializable {
 
         oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
 
-      }
+      }*/
     })
 
   }
