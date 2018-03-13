@@ -461,7 +461,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title" style="background-color:#f1f1f1">
-                        <a data-toggle="collapse" href="#collapse3">Achitecture Diagram</a>
+                        <a data-toggle="collapse" href="#collapse3">Architecture Diagram</a>
                     </h4>
                 </div>
                 <div id="collapse3" class="panel-collapse collapse" style="background-color:#272727" >
