@@ -35,7 +35,7 @@ function pollUniqueUsers(start) {
             // Recursive Poll
             pollUniqueUsers();// Call poll after complete
         });
-    }, 5000);//two seconds
+    }, 11000);//eleven seconds
 }
 
 function refreshUniqueUserTable(data) {
@@ -99,7 +99,7 @@ function pollUniqueUsersRollup(start) {
             // Recursive Poll
             pollUniqueUsersRollup();// Call poll after complete
         });
-    }, 5000);//ten seconds
+    }, 20000);//twenty seconds
 }
 function refreshUniqueUserTableRollup(data) {
 

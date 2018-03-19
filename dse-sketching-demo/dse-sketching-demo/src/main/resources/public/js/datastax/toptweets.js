@@ -77,7 +77,7 @@ function getTopTweetsRollup(start) {
             // Recursive Poll
             getTopTweetsRollup();// Call poll after complete
         });
-    }, 15000);//fifteen seconds
+    }, 20000);//twenty seconds
 }
 function formatTableResult(topTags){
 
