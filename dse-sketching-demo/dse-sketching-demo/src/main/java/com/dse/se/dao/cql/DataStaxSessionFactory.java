@@ -1,6 +1,5 @@
 package com.dse.se.dao.cql;
 
-import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.dse.DseCluster;
 import com.datastax.driver.dse.DseSession;
@@ -79,7 +78,7 @@ public class DataStaxSessionFactory {
     private synchronized PreparedStatement getOrCreatePreparedUniqueUsersForToday(){
         if(preparedUniqueUsersForToday == null){
              preparedUniqueUsersForToday = getSession().prepare(
-                    "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
+                    "select batchtime, uniqueperbatch from approximations.hlldata where id = 'tweets' and date = ?");
         }
         return preparedUniqueUsersForToday;
     }
@@ -107,7 +106,7 @@ public class DataStaxSessionFactory {
     private synchronized PreparedStatement getOrCreatePreparedTopTweetsRollup(){
         if(preparedTopTweetsRollup == null){
             preparedTopTweetsRollup = getSession().prepare(
-                    "select batchtime, preview from approximations.cmsdata10min where id = ? and date = ? limit 1");
+                    "select batchtime, preview from approximations.cmsdata10min where id = ? and date = ? limit 2");
         }
         return preparedTopTweetsRollup;
     }

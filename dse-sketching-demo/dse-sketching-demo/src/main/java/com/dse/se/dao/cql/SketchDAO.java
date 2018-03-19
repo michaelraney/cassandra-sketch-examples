@@ -8,11 +8,8 @@ import com.dse.se.dto.UniqueUsersDTO;
 import com.google.common.base.Stopwatch;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,26 +21,25 @@ import java.util.concurrent.TimeUnit;
 public class SketchDAO implements ISketchDAO {
 
     //yyyy-mm-dd HH:mm:ssZ
-    private static final SimpleDateFormat resultformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final SimpleDateFormat dateformat = new SimpleDateFormat("MM-dd-YYYY");
-
+    private static final SimpleDateFormat resultFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
 
     public static void main (String[] args) throws ParseException{
-        new SketchDAO().getUniqueUsersForToday();
+        new SketchDAO().getUniqueUsersForToday(new Date());
     }
 
     @Override
-    public UniqueUsersDTO getUniqueUsersForToday() throws ParseException {
+    public UniqueUsersDTO getUniqueUsersForToday(Date day) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
-        String today = dateformat.format(new Date());
+        String dayAsString = dateFormat.format(day);
 
 
         PreparedStatement preparedUniqueUsersForToday = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersForToday();
 
-        BoundStatement bound = preparedUniqueUsersForToday.bind("tweets",  today);
+        BoundStatement bound = preparedUniqueUsersForToday.bind(dayAsString);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -58,7 +54,7 @@ public class SketchDAO implements ISketchDAO {
             Integer uniqueUsers = oneResult.getInt(1);
 
             Approximate oneApproximate = new Approximate();
-            oneApproximate.setTime(resultformat.format(time));
+            oneApproximate.setTime(resultFormat.format(time));
             oneApproximate.setUniqueUsers(uniqueUsers);
 
             approximateList.add(oneApproximate);
@@ -71,17 +67,17 @@ public class SketchDAO implements ISketchDAO {
         return uniqueUsersDTO;
     }
     @Override
-    public UniqueUsersDTO getUniqueUsersRollup() throws ParseException {
+    public UniqueUsersDTO getUniqueUsersRollup(Date day) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
-        String today = dateformat.format(new Date());
+        String dayAsString = dateFormat.format(day);
 
 
         PreparedStatement preparedUniqueUsersRollup = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersRollup();
 
 
-        BoundStatement bound = preparedUniqueUsersRollup.bind("tweets",  today);
+        BoundStatement bound = preparedUniqueUsersRollup.bind("tweets",  dayAsString);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
@@ -96,7 +92,7 @@ public class SketchDAO implements ISketchDAO {
             Integer uniqueUsers = oneResult.getInt(1);
 
             Approximate oneApproximate = new Approximate();
-            oneApproximate.setTime(resultformat.format(time));
+            oneApproximate.setTime(resultFormat.format(time));
             oneApproximate.setUniqueUsers(uniqueUsers);
 
             approximateList.add(oneApproximate);
@@ -109,36 +105,36 @@ public class SketchDAO implements ISketchDAO {
         return uniqueUsersDTO;
     }
     @Override
-    public TopHashTagsDTO getTopTweetsRollup() throws ParseException{
+    public TopHashTagsDTO getTopTweetsRollup(Date day) throws ParseException{
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
-        String today = dateformat.format(new Date());
-
+        String dayAsString = dateFormat.format(day);
 
         PreparedStatement preparedTopTweetsRollup = DataStaxSessionFactory.getInstance().getPreparedTopTweetsRollup();
 
-        BoundStatement bound = preparedTopTweetsRollup.bind("tweets", today);
+        BoundStatement bound = preparedTopTweetsRollup.bind("tweets", dayAsString);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
         stopwatch.stop();
 
 
-        Integer count  = results.getAvailableWithoutFetching();
+        //Integer count  = results.getAvailableWithoutFetching();
 
         TopHashTagsDTO topHashTagsDTO = new TopHashTagsDTO();
         topHashTagsDTO.setResultTime(stopwatch.elapsed(TimeUnit.MILLISECONDS));
 
-        if(count > 0){
-            Row oneResult = results.one();
+        results.forEach(row -> {
+            Date time = row.getTimestamp(0);
 
-            Date time = oneResult.getTimestamp(0);
+            System.out.println(time);
 
-            Map<String, Long> map = oneResult.getMap(1, String.class, Long.class);
+            Map<String, Long> map = row.getMap(1, String.class, Long.class);
 
             topHashTagsDTO.setTopTags(map);
-        }
+        });
+
 
 
         return topHashTagsDTO;

@@ -1,8 +1,8 @@
 package com.dse.se.controller;
 
-import com.dse.se.dao.ISketchDAO;
 import com.dse.se.dto.TopHashTagsDTO;
 import com.dse.se.dto.UniqueUsersDTO;
+import com.dse.se.service.SketchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,25 +23,24 @@ import java.text.ParseException;
 public class SchemaRESTServicesController {
 
     @Autowired
-    ISketchDAO sketchDAO;
+    SketchService sketchService;
 
     /***
-     * Retrieve the Schema XML from Solr, pass back to caller with formatting
-     * removed
+     * Retrieve unique number of users by window
      *
-     * @return schemaXML without formatting
+     * @return uniqueusers raw format
      */
     @RequestMapping(method = RequestMethod.GET, path = "/getUniqueUsersForToday")
     public UniqueUsersDTO getUniqueUsersForToday() throws ParseException{
 
-        return sketchDAO.getUniqueUsersForToday();
+        return sketchService.getUniqueUsersForToday();
 
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/getUniqueUsersRollup")
     public UniqueUsersDTO getUniqueUsersRollup() throws ParseException{
 
-        return sketchDAO.getUniqueUsersRollup();
+        return sketchService.getUniqueUsersRollup();
 
     }
 
@@ -49,7 +48,7 @@ public class SchemaRESTServicesController {
     @RequestMapping(method = RequestMethod.GET, path = "/getTopTweetsRollup")
     public TopHashTagsDTO getTopTweetsRollup() throws ParseException{
 
-        return sketchDAO.getTopTweetsRollup();
+        return sketchService.getTopTweetsRollup();
 
     }
 

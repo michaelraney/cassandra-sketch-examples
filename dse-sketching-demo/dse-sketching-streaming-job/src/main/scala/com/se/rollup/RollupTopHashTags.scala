@@ -53,8 +53,10 @@ class RollupTopHashTags extends Serializable {
         groupedResults.foreach(line => {
 
 
+          println("oneresult")
 
-         // val globalTopK = line._2.heavyHitters.map(id =>
+
+          // val globalTopK = line._2.heavyHitters.map(id =>
          //   (id, line._2.frequency(id).estimate)).toSeq.sortBy(_._2).reverse.slice(0, TOPK)
 
           // println("final results" + line._1)
@@ -74,7 +76,10 @@ class RollupTopHashTags extends Serializable {
 
           oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore", "preview"))
 
+
+
         })
 
-     }
+    
+  }
  }

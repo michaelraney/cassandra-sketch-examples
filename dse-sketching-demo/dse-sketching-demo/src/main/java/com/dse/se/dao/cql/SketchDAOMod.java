@@ -23,21 +23,20 @@ import java.util.concurrent.TimeUnit;
 public class SketchDAOMod implements ISketchDAO {
 
     //yyyy-mm-dd HH:mm:ssZ
-    private static final SimpleDateFormat resultformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat resultformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
     private static final SimpleDateFormat dateformat = new SimpleDateFormat("MM-dd-YYYY");
 
 
-
     public static void main (String[] args) throws ParseException{
-        new SketchDAOMod().getUniqueUsersForToday();
+        new SketchDAOMod().getUniqueUsersForToday(new Date());
     }
 
     @Override
-    public UniqueUsersDTO getUniqueUsersForToday() throws ParseException {
+    public UniqueUsersDTO getUniqueUsersForToday(Date day) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
-        String today = dateformat.format(new Date());
+        String today = dateformat.format(day);
         //Date highdate = resultformat.parse("2018-03-08 21:20:00.000000+0000");
 
         /*
@@ -78,7 +77,7 @@ public class SketchDAOMod implements ISketchDAO {
         return uniqueUsersDTO;
     }
     @Override
-    public UniqueUsersDTO getUniqueUsersRollup() throws ParseException {
+    public UniqueUsersDTO getUniqueUsersRollup(Date day) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
@@ -117,7 +116,7 @@ public class SketchDAOMod implements ISketchDAO {
         return uniqueUsersDTO;
     }
     @Override
-    public TopHashTagsDTO getTopTweetsRollup() throws ParseException{
+    public TopHashTagsDTO getTopTweetsRollup(Date day) throws ParseException{
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
