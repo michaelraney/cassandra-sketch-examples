@@ -46,7 +46,7 @@ function refreshUniqueUserTable(data) {
 
     MG.data_graphic({
         title: "Unique Users",
-        description: "Unique users who have tweeted",
+        description: "Each point represents unique users who have tweeted within 10 second interval",
         data: data,
         width:850,
         height: 200,
@@ -109,7 +109,7 @@ function refreshUniqueUserTableRollup(data) {
 
     MG.data_graphic({
         title: "Unique Users 10min Aggregate",
-        description: "Unique users who have tweeted",
+        description: "Each point represents unique users who have tweeted within 10 minute interval",
         data: data,
         width: 500,
         height: 200,

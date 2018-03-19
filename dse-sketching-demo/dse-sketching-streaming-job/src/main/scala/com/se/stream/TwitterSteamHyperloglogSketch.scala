@@ -50,7 +50,7 @@ class TwitterSteamHyperloglogSketch extends Serializable {
 
         val uniqueperbatch = partial.estimatedSize.toInt
 
-        val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, WINDOW_SIZE, 1, uniqueperbatch, toBytes(partial))))
+        val oneWindowValue = sc.parallelize(Seq(("uniqueusers", todayAsString, now, WINDOW_SIZE, 1, uniqueperbatch, toBytes(partial))))
 
         oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
 
@@ -61,7 +61,7 @@ class TwitterSteamHyperloglogSketch extends Serializable {
 
             println(s"Unknown exception: $unknown")
             val partial = hll.zero;
-            val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, WINDOW_SIZE, 1, 0, toBytes(partial))))
+            val oneWindowValue = sc.parallelize(Seq(("uniqueusers", todayAsString, now, WINDOW_SIZE, 1, 0, toBytes(partial))))
             oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
           }
         }
@@ -70,20 +70,7 @@ class TwitterSteamHyperloglogSketch extends Serializable {
         // your scala code here, such as to close a database connection
       }
 
-      /*val totalInWindow = rdd.count();
-      if (totalInWindow != 0) {
 
-        val now = new Date();
-
-        val partial = rdd.first()
-
-        val uniqueperbatch = partial.estimatedSize.toInt
-
-        val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, WINDOW_SIZE, totalInWindow, uniqueperbatch, toBytes(partial))))
-
-        oneWindowValue.saveToCassandra("approximations", "hlldata", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
-
-      }*/
     })
 
   }

@@ -78,7 +78,7 @@ public class DataStaxSessionFactory {
     private synchronized PreparedStatement getOrCreatePreparedUniqueUsersForToday(){
         if(preparedUniqueUsersForToday == null){
              preparedUniqueUsersForToday = getSession().prepare(
-                    "select batchtime, uniqueperbatch from approximations.hlldata where id = 'tweets' and date = ?");
+                    "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
         }
         return preparedUniqueUsersForToday;
     }

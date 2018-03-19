@@ -69,7 +69,7 @@ class TwitterSteamCountMinSketch extends Serializable {
 
           val store = ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)
 
-          val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, store)))
+          val oneWindowValue = sc.parallelize(Seq(("tophashtags", todayAsString, now, store)))
 
           oneWindowValue.saveToCassandra("approximations", "cmsdata", SomeColumns("id", "date", "batchtime", "cmsstore"))
         } catch {
@@ -80,7 +80,7 @@ class TwitterSteamCountMinSketch extends Serializable {
 
             val store = ScalaKryoInstantiator.defaultPool.toBytesWithClass(partial)
 
-            val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, now, store)))
+            val oneWindowValue = sc.parallelize(Seq(("tophashtags", todayAsString, now, store)))
 
             oneWindowValue.saveToCassandra("approximations", "cmsdata", SomeColumns("id", "date", "batchtime", "cmsstore"))
           }

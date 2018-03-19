@@ -27,7 +27,7 @@ class RollupUniqueUsers extends Serializable {
          .options(Map("table" -> "hlldata", "keyspace" -> "approximations", "pushdown" -> "true"))
          .load()
 
-       val approxUsers = table1.filter("id = 'tweets' AND date = '" + todayAsString + "'").groupBy(window(table1.col("batchtime"), "10 minutes")).agg(collect_set("hllstore").as("hllstorelist"))
+       val approxUsers = table1.filter("id = 'uniqueusers' AND date = '" + todayAsString + "'").groupBy(window(table1.col("batchtime"), "10 minutes")).agg(collect_set("hllstore").as("hllstorelist"))
 
        val a_keyValues = approxUsers.select($"window.start", explode($"hllstorelist").as("hllstore"))
 
@@ -56,7 +56,7 @@ class RollupUniqueUsers extends Serializable {
 
          //println("final results" + line._1 + " " + hllagg)
 
-         val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, line._1, 0, 1, hllagg, toBytes(line._2))))
+         val oneWindowValue = sc.parallelize(Seq(("uniqueusersrollup", todayAsString, line._1, 0, 1, hllagg, toBytes(line._2))))
 
          oneWindowValue.saveToCassandra("approximations", "hlldata10min", SomeColumns("id", "date", "batchtime", "batchwindow", "totalinwindow", "uniqueperbatch", "hllstore"))
 

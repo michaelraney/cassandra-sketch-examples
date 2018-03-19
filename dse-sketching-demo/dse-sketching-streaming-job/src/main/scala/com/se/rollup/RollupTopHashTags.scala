@@ -27,7 +27,7 @@ class RollupTopHashTags extends Serializable {
           .options(Map("table" -> "cmsdata", "keyspace" -> "approximations", "pushdown" -> "true"))
           .load()
 
-        val approxUsers = table1.filter("id = 'tweets' AND date = '" + todayAsString + "'").groupBy(window(table1.col("batchtime"), "10 minutes")).agg(collect_set("cmsstore").as("cmsstorelist"))
+        val approxUsers = table1.filter("id = 'tophashtags' AND date = '" + todayAsString + "'").groupBy(window(table1.col("batchtime"), "10 minutes")).agg(collect_set("cmsstore").as("cmsstorelist"))
 
         val a_keyValues = approxUsers.select($"window.start", explode($"cmsstorelist").as("cmsstore"))
 
@@ -52,10 +52,6 @@ class RollupTopHashTags extends Serializable {
 
         groupedResults.foreach(line => {
 
-
-          println("oneresult")
-
-
           // val globalTopK = line._2.heavyHitters.map(id =>
          //   (id, line._2.frequency(id).estimate)).toSeq.sortBy(_._2).reverse.slice(0, TOPK)
 
@@ -72,7 +68,7 @@ class RollupTopHashTags extends Serializable {
 
           val previewResults = globalTopK.map(a => a._1 -> a._2).toMap
 
-          val oneWindowValue = sc.parallelize(Seq(("tweets", todayAsString, line._1, store, previewResults)))
+          val oneWindowValue = sc.parallelize(Seq(("tophashtagsrollup", todayAsString, line._1, store, previewResults)))
 
           oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore", "preview"))
 
@@ -80,6 +76,6 @@ class RollupTopHashTags extends Serializable {
 
         })
 
-    
+
   }
  }
