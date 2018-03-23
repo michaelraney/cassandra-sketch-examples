@@ -5,7 +5,7 @@ weight: 0
 ---
 
 
-Note: Please keep this demo running for about an hour or two. As of 3/18/2018 This data feed has volume caps and not recommended for two deployments at the same time. This results in multiple subscriptions to the twitter feed and may push over the cap limits. This limitation does not limit multipe users demoing this application at the same time. Multiple users are seperated by different web sessions, but make use the same data stored in DSE. You can check the existing deployments page and coordinate with the current deployment owner. 
+Note from author: Spin this Asset up an hour before scheduled demonstration and shut it down when finished. As of 3/18/2018 This Asset makes use of a data feed with volume caps, and it's not recommended for two deployments at the same time. Multiple deployments results in multiple subscriptions to the data feed and may push the application key over cap limits. This deployment limitation does not limit the amount of users demoing this application independently at the same time. Multiple users are seperated by different web sessions and can make use the same public url. Think of this as multiple clients accessing the same webpage. You can avoid issues with data caps and save operational cost by coordinating with owners of existing deployments and reusing public urls.  - Mike
 
 What's Trending: DataStax Sketching Examples
 ===================
