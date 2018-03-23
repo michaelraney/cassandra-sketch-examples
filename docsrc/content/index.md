@@ -5,7 +5,7 @@ weight: 0
 ---
 
 
-Note: Please keep this demo running for about an hour. As of 3/18 This data feed has volume caps and not recommended for two people to use this demo at the same time. You can check this by looking at existing deployments in the asset hub. 
+Note: Please keep this demo running for about an hour or two. As of 3/18/2018 This data feed has volume caps and not recommended for two deployments at the same time. This results in multiple subscriptions to the twitter feed and may push over the cap limits. This limitation does not limit multipe users demoing this application at the same time. Users are seperated by different web sessions, but make use the same data stored in DSE. You can check the existing deployments page and coordinate with the current deployment owner. 
 
 What's Trending: DataStax Sketching Examples
 ===================
