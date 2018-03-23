@@ -5,7 +5,7 @@
 * Sketches in Sliding Windows to approximate Streaming Workloads
 
 ## Probabilistic data structures in space time accuracy tradeoffs. 
- In systems architecture, we have several design tradeoffs to efficiently guide our technology choices for enterprise solutions.  When reviewing these types of tradeoffs, it's important to note that tradeoffs are not absolutes, but guidelines to what will be simple and what will be complex. Probabilistic data structures trade accuracy with a margin of error while making use of a finite space and short amount of time. This is the proven solution for determining trends and frequency distribution at scale. 
+ In systems architecture, we have several design tradeoffs to efficiently guide our technology choices for enterprise solutions.  When reviewing these types of tradeoffs, it's important to note that tradeoffs are not absolutes, but guidelines to what will be simple and what will be complex. Probabilistic data structures trade accuracy with a margin of error while making use of a finite space in a short amount of time. This is the proven solution for determining trends and frequency distribution at scale. 
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/images/space-time-accuracy-tradeoff.png "Data Processing Tradeoffs")
 
