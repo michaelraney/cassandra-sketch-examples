@@ -18,7 +18,7 @@ public class SketchService {
     @Autowired
     ISketchDAO sketchDAO;
 
-    Integer elapsedTimeInMills = 60 * 60 * 1;//One Hour
+    Integer elapsedTimeInMills = 1000 * 60 * 60 * 1;//One Hour
 
     public UniqueUsersDTO getUniqueUsersForToday() throws ParseException {
 
