@@ -8,6 +8,7 @@ import com.dse.se.dto.UniqueUsersDTO;
 import com.google.common.base.Stopwatch;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,22 +27,21 @@ public class SketchDAO implements ISketchDAO {
 
 
     public static void main (String[] args) throws ParseException{
-        new SketchDAO().getUniqueUsersForToday(new Date());
+        new SketchDAO().getUniqueUsersForToday(dateFormat.parse("03-18-2018"), resultFormat.parse("2018-03-18 04:37:50+0000"));//last 5 minutes
     }
 
     @Override
-    public UniqueUsersDTO getUniqueUsersForToday(Date day) throws ParseException {
+    public UniqueUsersDTO getUniqueUsersForToday(Date day, Date relativeElapsedTime) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
         String dayAsString = dateFormat.format(day);
 
-
         PreparedStatement preparedUniqueUsersForToday = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersForToday();
 
-        BoundStatement bound = preparedUniqueUsersForToday.bind("uniqueusers", dayAsString);
+        BoundStatement bound = preparedUniqueUsersForToday.bind("uniqueusers", dayAsString, Timestamp.from(relativeElapsedTime.toInstant()));
 
-                Stopwatch stopwatch = Stopwatch.createStarted();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);
         stopwatch.stop();
 
@@ -67,7 +67,7 @@ public class SketchDAO implements ISketchDAO {
         return uniqueUsersDTO;
     }
     @Override
-    public UniqueUsersDTO getUniqueUsersRollup(Date day) throws ParseException {
+    public UniqueUsersDTO getUniqueUsersRollup(Date day, Date relativeElapsedTime) throws ParseException {
 
         Session session = DataStaxSessionFactory.getInstance().getSession();
 
@@ -77,7 +77,7 @@ public class SketchDAO implements ISketchDAO {
         PreparedStatement preparedUniqueUsersRollup = DataStaxSessionFactory.getInstance().getPreparedUniqueUsersRollup();
 
 
-        BoundStatement bound = preparedUniqueUsersRollup.bind("uniqueusersrollup",  dayAsString);
+        BoundStatement bound = preparedUniqueUsersRollup.bind("uniqueusersrollup",  dayAsString, Timestamp.from(relativeElapsedTime.toInstant()));
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         ResultSet results = session.execute(bound);

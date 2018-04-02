@@ -78,7 +78,7 @@ public class DataStaxSessionFactory {
     private synchronized PreparedStatement getOrCreatePreparedUniqueUsersForToday(){
         if(preparedUniqueUsersForToday == null){
              preparedUniqueUsersForToday = getSession().prepare(
-                    "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ?");
+                    "select batchtime, uniqueperbatch from approximations.hlldata where id = ? and date = ? and batchtime > ?");
         }
         return preparedUniqueUsersForToday;
     }
@@ -92,7 +92,7 @@ public class DataStaxSessionFactory {
     private synchronized PreparedStatement getOrCreatePreparedUniqueUsersRollup(){
         if(preparedUniqueUsersRollup == null){
             preparedUniqueUsersRollup = getSession().prepare(
-                    "select batchtime, uniqueperbatch from approximations.hlldata10min where id = ? and date = ?");
+                    "select batchtime, uniqueperbatch from approximations.hlldata10min where id = ? and date = ? and batchtime > ?");
         }
         return preparedUniqueUsersRollup;
     }

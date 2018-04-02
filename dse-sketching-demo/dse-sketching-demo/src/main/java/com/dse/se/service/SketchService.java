@@ -18,15 +18,22 @@ public class SketchService {
     @Autowired
     ISketchDAO sketchDAO;
 
+    Integer elapsedTimeInMills = 60 * 60 * 1;//One Hour
 
     public UniqueUsersDTO getUniqueUsersForToday() throws ParseException {
 
-        return sketchDAO.getUniqueUsersForToday(new Date());
+        Date now = new Date();
+        Date relativeElapsedTime = new Date(now.getTime() - elapsedTimeInMills);
+        return sketchDAO.getUniqueUsersForToday(now, relativeElapsedTime);
 
     }
 
     public UniqueUsersDTO getUniqueUsersRollup() throws ParseException {
-        return sketchDAO.getUniqueUsersRollup(new Date());
+
+        Date now = new Date();
+        Date relativeElapsedTime = new Date(now.getTime() - elapsedTimeInMills);
+
+        return sketchDAO.getUniqueUsersRollup(now, relativeElapsedTime);
     }
 
     public TopHashTagsDTO getTopTweetsRollup() throws ParseException {

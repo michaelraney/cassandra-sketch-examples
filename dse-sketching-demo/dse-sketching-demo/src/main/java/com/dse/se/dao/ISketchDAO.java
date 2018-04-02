@@ -8,9 +8,9 @@ import java.util.Date;
 
 public interface ISketchDAO {
 
-     UniqueUsersDTO getUniqueUsersForToday(Date day) throws ParseException;
+     UniqueUsersDTO getUniqueUsersForToday(Date day, Date relativeElapsedTime) throws ParseException;
 
-     UniqueUsersDTO getUniqueUsersRollup(Date day)throws ParseException;
+     UniqueUsersDTO getUniqueUsersRollup(Date day, Date relativeElapsedTime)throws ParseException;
 
      TopHashTagsDTO getTopTweetsRollup(Date day)throws ParseException;
 
