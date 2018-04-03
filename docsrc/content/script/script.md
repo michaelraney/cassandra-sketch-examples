@@ -20,6 +20,14 @@ Now that you have your Public IP address you can access a few different apps tha
 
 ### Trending Now Dashboard 
 This is your screen to walk users through the visualization of the demo. It consist of three seperate windows.
+
+#### External links
+Links are some additional resources to code/documentation. The links in the menu from left to right. Link to spark worker hosted on node0. Link to Zeppelin notebooks(a notebook for executing dynamic queries and showing code behind the demo). Link to github containing code for demo and datasketching examples in DSE. 
+
+![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-link-menu.png | width=400)
+
+
+
 #### Perspective 10 seconds
 This view is showing the raw processing of the twitter feed. Breaking down each 10 second streaming window into Hyperloglog and countminsketch data structures. This view does not have trending hashtags because its not as vaulable within 10 seconds.
 #### Perspective 10 minutes
