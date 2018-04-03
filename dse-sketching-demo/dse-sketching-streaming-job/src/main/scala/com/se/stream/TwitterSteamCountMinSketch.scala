@@ -57,10 +57,11 @@ class TwitterSteamCountMinSketch extends Serializable {
         ids.map(id => cms.create(id))
       }).reduce(_ ++ _)
 
-      //Used to create bucketing for timeseries.
-      val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
       approxTopUsers.foreachRDD(rdd => {
+
+        //Used to create bucketing for timeseries.
+        val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
         val now = new Date()
 

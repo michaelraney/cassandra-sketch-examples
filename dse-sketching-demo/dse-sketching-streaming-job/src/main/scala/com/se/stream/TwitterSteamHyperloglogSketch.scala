@@ -38,9 +38,10 @@ class TwitterSteamHyperloglogSketch extends Serializable {
       ids.map(id => hll.create(id))
     }).reduce(_ + _)
 
-    val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
     approxUsers.foreachRDD(rdd => {
+
+      val todayAsString = new SimpleDateFormat("MM-dd-yyyy").format(new Date())
 
       val now = new Date();
 
