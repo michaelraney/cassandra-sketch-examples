@@ -1,9 +1,9 @@
 ---
-title: Script
+title: demo
 menu:
   main:
-      parent: Script
-      identifier: script
+      parent: demo
+      identifier: demo
       weight: 301
 ---
 
@@ -18,11 +18,11 @@ Now that you have your Public IP address you can access a few different apps tha
 
 ## Sketching Application
 
-### Trending Now Dashboard 
+### Trending Now Dashboard
 This is your screen to walk users through the visualization of the demo. It consist of three seperate windows.
 
 #### External links
-Links are some additional resources to code/documentation. The links in the menu from left to right. Link to spark worker hosted on node0. Link to Zeppelin notebooks(a notebook for executing dynamic queries and showing code behind the demo). Link to github containing code for demo and datasketching examples in DSE. 
+Links are some additional resources to code/documentation. The links in the menu from left to right. Link to spark worker hosted on node0. Link to Zeppelin notebooks(a notebook for executing dynamic queries and showing code behind the demo). Link to github containing code for demo and datasketching examples in DSE.
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-link-menu.png "External Links")
 
@@ -33,7 +33,7 @@ This view is showing the raw processing of the twitter feed. Breaking down each 
 
 
 #### Perspective 10 minutes
-This view is showing a 'roll-up' sketch of 10 second windows into 10 minute windows. Each point represents 10 minutes and since our sketching datastuctures has associative properties, this is not merely a simple count, but a representation of unique users over ten minutes. Additionally, we have a view of top hashtags. This uses countminsketch to create a frequency of hashtags seen on incomming tweets. You are able to click these and view them on twitter. 
+This view is showing a 'roll-up' sketch of 10 second windows into 10 minute windows. Each point represents 10 minutes and since our sketching datastuctures has associative properties, this is not merely a simple count, but a representation of unique users over ten minutes. Additionally, we have a view of top hashtags. This uses countminsketch to create a frequency of hashtags seen on incomming tweets. You are able to click these and view them on twitter.
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/perspective-10min.png "Perspective A 10 minutes")
 
@@ -45,7 +45,7 @@ A future state architecute outlining the various components of the architecture.
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-architecture.png "Architecture view")
 
-### Zeppelin Notebook 
+### Zeppelin Notebook
 The Zeppelin notebook contains scala code samples to build query results. This offers the ability to build some dynamic queries for the demo. Contains samples for countmin sketch and hyperloglog
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/zeppelin-notebook.png "Zeppelin")
@@ -54,4 +54,3 @@ https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/d
 
 ### OpsCenter
 If needed for your demo, you can access OpsCenter and give a tour of it at <http://publicIP:8888/>:
-
