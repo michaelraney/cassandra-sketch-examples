@@ -1,10 +1,10 @@
 ---
-title: demo
+title: Demo Application
 menu:
   main:
-      parent: demo
-      identifier: demo
-      weight: 301
+      parent: Demo
+      identifier: Demo Application
+      weight: 101
 ---
 
 
