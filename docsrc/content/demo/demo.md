@@ -9,6 +9,7 @@ menu:
 
 
 Now that you have your Public IP address you can access a few different apps that you can leverage:
+
 * Trending Now Dashboard - <http://publicIP:8081/>
 * Zeppelin Notebook - <http://publicIP::8080/>
 * DataStax OpsCenter - <http://publicIP:8888/>
