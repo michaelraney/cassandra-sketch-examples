@@ -24,7 +24,8 @@ This is your screen to walk users through the visualization of the demo. It cons
 #### External links
 Links are some additional resources to code/documentation. The links in the menu from left to right. Link to spark worker hosted on node0. Link to Zeppelin notebooks(a notebook for executing dynamic queries and showing code behind the demo). Link to github containing code for demo and datasketching examples in DSE. 
 
-![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-link-menu.png | width=400)
+
+![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-link-menu.png "External Links" | width=400)
 
 
 
