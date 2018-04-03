@@ -45,12 +45,12 @@ A future state architecute outlining the various components of the architecture.
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/demo-architecture.png "Architecture view")
 
-### Zeppelin Notebook
+## Zeppelin Notebook
 The Zeppelin notebook contains scala code samples to build query results. This offers the ability to build some dynamic queries for the demo. Contains samples for countmin sketch and hyperloglog
 
 ![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/zeppelin-notebook.png "Zeppelin")
 
 https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/zeppelin-notebook.png
 
-### OpsCenter
+## OpsCenter
 If needed for your demo, you can access OpsCenter and give a tour of it at <http://publicIP:8888/>:
