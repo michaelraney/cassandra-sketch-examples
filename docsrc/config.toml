@@ -26,7 +26,7 @@ canonifyurls = true
 
 
 [[menu.main]]
-	name   = "Asset Name"
+	name   = "What's Trending"
 	url    = "/"
 	weight = 10
 [[menu.main]]
