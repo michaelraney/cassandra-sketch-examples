@@ -5,7 +5,8 @@ weight: 0
 ---
 
 #### Note from author
-Spin this Asset up an hour before scheduled demonstration, and shut it down when finished. As of 3/18/2018 This Asset makes use of a data feed with volume caps, and it's not recommended for two deployments at the same time. Multiple deployments will result in multiple subscriptions to the data feed, and may push the application key over cap limits. This deployment limitation does not limit the amount of users demoing this application independently at the same time. Multiple users will be seperated by different web sessions, and can make use the same public url to demo this asset Think of this as multiple users accessing the same public webpage. You can avoid issues with data caps and save operational cost by coordinating with owners of existing deployments of this asset.  - Mike
+### One deployment max. Check for existing deployments before spinning up this asset. Read the warning below. 
+Spin this Asset up an hour before scheduled demonstration, and shut it down when finished. As of 3/18/2018 this asset uses a live twitter feed, which has volume/subscription caps, and it's not recommended for multiple asset deployments at the same time. Multiple deployments will result in multiple subscriptions to the twitter data feed, and may push the application key over cap limits. The way around the deployment limitation is to use the url of an existing deployment. Multiple users will be seperated by different web sessions, and can make use the same public url to demo this asset without conflict. Think of this as multiple users accessing the same public webpage. You can avoid issues with data caps, and save operational cost by coordinating with owners of existing deployments of this asset. You can view existing deployments and owners by choosing "Deployed Clusters" in the Asset hub menu.  - Mike
 
 #### Recommended instances 
 * m3.xlarge, m3.2xlarge
