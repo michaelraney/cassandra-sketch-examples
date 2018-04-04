@@ -5,9 +5,10 @@
 
 $(document).ready(function(){
 
+    initializeUniqueUserGraphBeforePolling();
+    initializeTopTweetsTable()
+
     pollUniqueUsers()
     pollUniqueUsersRollup()
     getTopTweetsRollup()
-    initializeTopTweetsTable()
-
 });

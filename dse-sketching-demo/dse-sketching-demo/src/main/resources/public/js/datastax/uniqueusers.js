@@ -101,6 +101,7 @@ function pollUniqueUsersRollup(start) {
         });
     }, 20000);//twenty seconds
 }
+
 function refreshUniqueUserTableRollup(data) {
 
     //data = [{'time':new Date(), 'uniqueUsers':10}]
@@ -124,6 +125,59 @@ function refreshUniqueUserTableRollup(data) {
 
     })
 
+}
+function initializeUniqueUserGraphBeforePolling(){
+
+    $.ajax({
+        url: "getUniqueUsersForToday",
+        type: "get",
+        contentType: "application/json",
+        dataType: "json"
+    }).success(function (dto) {
 
 
+        if(dto.approximates) {
+            if (dto.approximates != null) {
+                if (dto.approximates.length > 0) {
+                    refreshUniqueUserTable(dto.approximates);
+                }
+            }else{
+                console.log("getUniqueUsersForToday:" + JSON.stringify(dto))
+            }
+        }else{
+            console.log("getUniqueUsersForToday:" + JSON.stringify(dto))
+        }
+
+        $("#uniqueUserQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
+    })
+
+    $.ajax({
+        url: "getUniqueUsersRollup",
+        type: "get",
+        contentType: "application/json",
+        dataType: "json"
+    }).success(function (dto) {
+
+
+        // Refresh UI Data
+        if(dto.approximates) {
+            if (dto.approximates != null) {
+                if (dto.approximates.length > 0) {
+                    refreshUniqueUserTableRollup(dto.approximates);
+                }
+            }else{
+                console.log("getUniqueUsersRollup:" + JSON.stringify(dto))
+            }
+        }else{
+            console.log("getUniqueUsersRollup:" + JSON.stringify(dto))
+        }
+
+
+        $("#uniqueUserRollupQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
+
+        // refreshAccountTable(dto);
+        // refreshDetailsTable(dto);
+    });
 }
