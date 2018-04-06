@@ -1,4 +1,5 @@
 hugo
+sparkHistory
 setupTables.sh
 installZeppelin.sh
 streaming.sh
