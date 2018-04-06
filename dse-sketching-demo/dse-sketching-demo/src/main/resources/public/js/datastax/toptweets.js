@@ -32,12 +32,40 @@ function initializeTopTweetsTable () {
 
     tagstable.order([1, 'desc']).draw()
 
-    /*
-    var hiddendate = $('#hiddendate');
+    $.ajax({
+        url: "getTopTweetsRollup",
+        type: "get",
+        contentType: "application/json",
+        dataType: "json"
+    }).success(function (dto) {
 
-    if (hiddendate.length > 0) {
-        $("#hiddendate").datetimepicker({});
-    }*/
+
+
+
+        //console.log("Result=" + JSON.stringify(dto));
+
+        if(dto.topTags) {
+            if (dto.topTags != null) {
+                formatTableResult(dto.topTags);
+
+            }else{
+                console.log("getTopTweetsRollup:" + JSON.stringify(dto))
+            }
+        }else{
+            console.log("getTopTweetsRollup:" + JSON.stringify(dto))
+        }
+        $("#topTweetsQueryTime").text("Response Time: "+dto.resultTime + " ms");
+
+        // Refresh UI Data
+
+
+        // refreshAccountTable(dto);
+        // refreshDetailsTable(dto);
+    }).complete(function (dto) {
+        // Recursive Poll
+        getTopTweetsRollup();// Call poll after complete
+    });
+
 }
 
 function getTopTweetsRollup(start) {

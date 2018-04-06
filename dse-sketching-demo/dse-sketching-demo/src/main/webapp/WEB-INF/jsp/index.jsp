@@ -106,7 +106,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <div id="mygraphrollup"/></td>
+                                    <div width="499" id="mygraphrollup"/></td>
                                 <td>
                                     <table id="toptagstable" class="table table-sm table-hover borderless setoptagstable">
                                     </table>
