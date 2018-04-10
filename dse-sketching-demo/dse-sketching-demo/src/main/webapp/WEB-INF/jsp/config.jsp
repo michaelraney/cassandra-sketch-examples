@@ -93,7 +93,7 @@
                     <h4>Don't Have a Key? Sign up its free</h4>
 
                     <p>
-                    This demo use the Twitter Streaming API. To use this demo, you will need to sign-up for the Twitter API to gain the appropriate credentials. To include API key, API secret, Access token, and Access token secret, follow the steps below:
+                    This demo use the Twitter Streaming API. To use this demo, you will need to sign-up for the Twitter Developer API to gain the appropriate credentials. You will need an API key, API secret, Access token, and Access token secret, follow the steps below:
                     </p>
 
                     <ul>
