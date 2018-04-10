@@ -1,4 +1,4 @@
-CREATE KEYSPACE IF NOT EXISTS approximations WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };
+CREATE KEYSPACE IF NOT EXISTS approximations WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 
 CREATE TABLE IF NOT EXISTS approximations.hlldata ( id text, date text, batchtime timestamp, batchwindow int, totalinwindow int, uniqueperbatch int, hllstore blob, PRIMARY KEY ((id, date), batchTime));
 
@@ -39,3 +39,5 @@ CREATE SEARCH INDEX IF NOT EXISTS ON approximations.cmsdata10min WITH COLUMNS id
 RELOAD SEARCH INDEX ON approximations.cmsdata10min;
 
 REBUILD SEARCH INDEX ON approximations.cmsdata10min;
+
+ALTER KEYSPACE dsefs WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};

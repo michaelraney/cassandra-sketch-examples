@@ -70,7 +70,7 @@ public class ShellDAO implements IStreamingJobDAO {
         while((line=br.readLine())!=null){
             System.out.println(line);
         }*/
-        p.waitFor(10L, TimeUnit.SECONDS);
+        p.waitFor(15L, TimeUnit.SECONDS);
 
     }
 }
