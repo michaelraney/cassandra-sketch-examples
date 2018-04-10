@@ -26,7 +26,7 @@ cqlsh HOST -f cql/setupTables.cql
 mvn package -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml
 
 #### Streaming Twitter Feed Sketch
-dse spark-submit --class com.se.stream.TwitterStreamSketchDemo --total-executor-cores 2 --executor-memory 2g datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target/dse-sketching-streaming-job-jar-with-dependencies.jar 
+dse spark-submit --class com.se.stream.TwitterStreamSketchDemo --total-executor-cores 2 --executor-memory 2g datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target/dse-sketching-streaming-job-jar-with-dependencies.jar consumerKey  consumerSecret  accessToken  accessTokenSecret 
 
 #### Rollup Batch Job
 dse spark-submit --class com.se.rollup.DataSketchingRollup --total-executor-cores 2 --executor-memory 2g datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target/dse-sketching-streaming-job-jar-with-dependencies.jar"
