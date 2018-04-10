@@ -11,7 +11,7 @@ To run this example, you will need to signup for the Twitter API to gain the app
 * Fill out the form, agree to the terms, and click "Create your Twitter application"
 * In the next page, click on "API keys" tab, and copy your "API key" and "API secret".
 * Scroll down and click "Create my access token", and copy your "Access token" and "Access token secret".
-* Not working? For more detailed instructions:http://docs.inboundnow.com/guide/create-twitter-application/
+* Not working? For more detailed instructions: http://docs.inboundnow.com/guide/create-twitter-application/
 
 #### Recommended instances 
 * m3.xlarge, m3.2xlarge
