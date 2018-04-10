@@ -5,8 +5,13 @@ weight: 0
 ---
 
 #### Note from author
-### One deployment max. Check for existing deployments before spinning up this asset. Read the warning below. 
-Spin this Asset up an hour before scheduled demonstration, and shut it down when finished. As of 3/18/2018 this asset uses a live twitter feed, which has volume/subscription caps, and it's not recommended for multiple asset deployments at the same time. Multiple deployments will result in multiple subscriptions to the twitter data feed, and may push the application key over cap limits. The way around the deployment limitation is to use the url of an existing deployment. Multiple users will be seperated by different web sessions, and can make use the same public url to demo this asset without conflict. Think of this as multiple users accessing the same public webpage. You can avoid issues with data caps, and save operational cost by coordinating with owners of existing deployments of this asset. You can view existing deployments and owners by choosing "Deployed Clusters" in the Asset hub menu.  - Mike
+### This demo requires Twitter App Key (Free)
+To run this example, you will need to signup for the Twitter API to gain the appropriate credentials.  To include API key, API secret, Access token, and Access token secret, follow the steps below:
+* Go to https://apps.twitter.com/ and log in with your twitter credentials.
+* Click "Create New App"
+* Fill out the form, agree to the terms, and click "Create your Twitter application"
+* In the next page, click on "API keys" tab, and copy your "API key" and "API secret".
+* Scroll down and click "Create my access token", and copy your "Access token" and "Access token secret".
 
 #### Recommended instances 
 * m3.xlarge, m3.2xlarge
