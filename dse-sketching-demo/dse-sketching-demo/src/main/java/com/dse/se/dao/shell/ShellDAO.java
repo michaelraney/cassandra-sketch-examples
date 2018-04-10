@@ -27,8 +27,8 @@ public class ShellDAO implements IStreamingJobDAO {
 
         //RightScale
         //TODO:Extract this to external config
-        String scriptFilePath = "/tmp/datastax-approximation-examples/dse-sketching-demo/dse-sketching-streaming-job/script/streaming-job.sh";
-        String executionDirectory = "/tmp/datastax-approximation-examples";
+        String scriptFilePath = "/tmp/datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/script/streaming-job.sh";
+        String executionDirectory = "/tmp/datastax-sketch-examples";
         String sparkJobJarDir = "/tmp/datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target";
 
 /*

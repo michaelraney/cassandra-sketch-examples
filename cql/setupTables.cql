@@ -32,7 +32,7 @@ RELOAD SEARCH INDEX ON approximations.cmsdata;
 
 REBUILD SEARCH INDEX ON approximations.cmsdata;
 
-CREATE TABLE  IF NOT EXISTS approximations.cmsdata10min ( id text, date text, batchtime timestamp, cmsstore blob, preview map<text, bigint>, PRIMARY KEY ((id, date), batchtime)) WITH CLUSTERING ORDER BY (batchtime DESC);;
+CREATE TABLE  IF NOT EXISTS approximations.cmsdata10min ( id text, date text, batchtime timestamp, cmsstore blob, preview map<text, bigint>, PRIMARY KEY ((id, date), batchtime)) WITH CLUSTERING ORDER BY (batchtime DESC);
 
 CREATE SEARCH INDEX IF NOT EXISTS ON approximations.cmsdata10min WITH COLUMNS id, date, batchtime;
 
