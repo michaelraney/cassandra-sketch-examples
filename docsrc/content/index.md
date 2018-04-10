@@ -12,6 +12,7 @@ To run this example, you will need to signup for the Twitter API to gain the app
 * In the next page, click on "API keys" tab, and copy your "API key" and "API secret".
 * Scroll down and click "Create my access token", and copy your "Access token" and "Access token secret".
 * Not working? For more detailed instructions: http://docs.inboundnow.com/guide/create-twitter-application/
+* Finally, when the demo starts go to seednode:8081/config to enter in your credentials
 
 #### Recommended instances 
 * m3.xlarge, m3.2xlarge
