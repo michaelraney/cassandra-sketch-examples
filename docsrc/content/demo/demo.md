@@ -11,6 +11,7 @@ menu:
 Now that you have your Public IP address you can access a few different apps that you can leverage:
 
 * Trending Now Dashboard - <http://publicIP:8081/>
+* Configuration - <http://publicIP:8081/config/>
 * Zeppelin Notebook - <http://publicIP::8080/>
 * DataStax OpsCenter - <http://publicIP:8888/>
 * Solr Admin UI - <http://publicIP:8983/solr/>
@@ -18,6 +19,10 @@ Now that you have your Public IP address you can access a few different apps tha
 ---
 
 ## Sketching Application
+
+### Trending Now Dashboard
+You must start the streaming job to start the data feed consumer for this demo. You can use the configuration screen or manually kick of the script. Config Screen is located at <http://publicIP:8081/config/>
+![alt text](https://raw.githubusercontent.com/michaelraney/datastax-sketch-examples/master/docsrc/static/images/config-screen.png "Config Screen")
 
 ### Trending Now Dashboard
 This is your screen to walk users through the visualization of the demo. It consist of three seperate windows.
