@@ -6,7 +6,7 @@ import com.dse.se.dto.UniqueUsersDTO;
 import java.text.ParseException;
 import java.util.Date;
 
-public interface ISketchDAO {
+public interface ISketchTimeSeriesDAO {
 
      UniqueUsersDTO getUniqueUsersForToday(Date day, Date relativeElapsedTime) throws ParseException;
 

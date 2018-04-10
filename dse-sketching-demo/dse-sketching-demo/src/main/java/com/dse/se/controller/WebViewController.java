@@ -17,6 +17,11 @@ public class WebViewController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/config")
+    public String config() {
+        return "config";
+    }
 }
 
 

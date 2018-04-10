@@ -7,7 +7,8 @@ then
   mvn package -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml
 
   #kickoff streaming job
-  nohup dse spark-submit --class com.se.stream.TwitterStreamSketchDemo --total-executor-cores 2 --executor-memory 1g /tmp/datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target/dse-sketching-streaming-job-jar-with-dependencies.jar > streaming.log &
+  #moved to demo application node0:8081/config based to make use of different user credentials
+  #nohup dse spark-submit --class com.se.stream.TwitterStreamSketchDemo --total-executor-cores 2 --executor-memory 1g /tmp/datastax-sketch-examples/dse-sketching-demo/dse-sketching-streaming-job/target/dse-sketching-streaming-job-jar-with-dependencies.jar > streaming.log &
 
   #write out current crontab for batch
   crontab -l > mycron

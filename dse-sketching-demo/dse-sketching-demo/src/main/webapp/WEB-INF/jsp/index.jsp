@@ -39,7 +39,6 @@
     <!--<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>-->
     <script type="text/javascript" src="js/bootstrap/datatables.min.js"></script>
 
-
      <link type="text/css" rel="stylesheet" href="js/datastax/trendingdemo.css"/>
 
      <script type="text/javascript" src="js/datastax/toptweets.js"></script>
@@ -62,6 +61,9 @@
                 <tr><td><img class="sedselogo" src="images/datastaxinvert.png"></td><td class="setitle">Trending Now</td>
                     <td class="setitleOptions">
 
+                        <script language="JavaScript">
+                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":8888'" + "> <img class='seimagelinks' src='images/OptionsIcon.png'></a>" );
+                        </script>
                          <script language="JavaScript">
                             document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":7080'" + "> <img class='seimagelinks' src='images/analytics.png'></a>" );
                         </script>
@@ -85,7 +87,7 @@
                         <a data-toggle="collapse" href="#collapse1">Perspective: 10 Second Window</a>
                     </h4>
                 </div>
-                <div id="collapse1" class="panel-collapse collapse sepanel-colapse" >
+                <div id="collapse1" class="panel-collapse collapse sepanel-colapse in" >
                         <div id="mygraph">
 
                         </div>

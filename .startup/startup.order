@@ -1,6 +1,7 @@
 hugo
-sparkHistory
 setupTables.sh
+sparkHistory.sh
 installZeppelin.sh
 streaming.sh
 trendingWebApp.sh
+restartOpsCenter.sh

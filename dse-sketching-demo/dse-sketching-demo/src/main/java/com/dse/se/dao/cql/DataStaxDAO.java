@@ -1,7 +1,7 @@
 package com.dse.se.dao.cql;
 
 import com.datastax.driver.core.*;
-import com.dse.se.dao.ISketchDAO;
+import com.dse.se.dao.ISketchTimeSeriesDAO;
 import com.dse.se.dto.Approximate;
 import com.dse.se.dto.TopHashTagsDTO;
 import com.dse.se.dto.UniqueUsersDTO;
@@ -18,8 +18,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
+
 @Component
-public class SketchDAO implements ISketchDAO {
+public class DataStaxDAO implements ISketchTimeSeriesDAO {
 
     //yyyy-mm-dd HH:mm:ssZ
     private static final SimpleDateFormat resultFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
@@ -27,7 +28,7 @@ public class SketchDAO implements ISketchDAO {
 
 
     public static void main (String[] args) throws ParseException{
-        new SketchDAO().getUniqueUsersForToday(dateFormat.parse("03-18-2018"), resultFormat.parse("2018-03-18 04:37:50+0000"));//last 5 minutes
+        new DataStaxDAO().getUniqueUsersForToday(dateFormat.parse("03-18-2018"), resultFormat.parse("2018-03-18 04:37:50+0000"));//last 5 minutes
     }
 
     @Override

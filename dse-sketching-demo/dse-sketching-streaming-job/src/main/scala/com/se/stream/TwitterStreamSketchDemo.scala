@@ -15,6 +15,12 @@ object TwitterStreamSketchDemo {
 
     def main(args: Array[String]): Unit = {
 
+        println("=============== TWITTER KEY ============")
+        println(args(0))
+        println(args(1))
+        println(args(2))
+        println(args(3))
+
         val conf = new SparkConf(true).setAppName("DataSketchingTwitterStream");
 
         val sc = new SparkContext(conf)
@@ -25,12 +31,13 @@ object TwitterStreamSketchDemo {
         //Twitter Authentication
         val cb = new ConfigurationBuilder();
 
+
         //BYO Credentials
         cb.setDebugEnabled(true)
-          .setOAuthConsumerKey("tH7vVFQIncx3tj0NIuo8vqOUC")
-          .setOAuthConsumerSecret("evnRBoQbW24Wb8IpHRhkZARHUzO83M4YQ6KxqZqenrzUYUBGcg")
-          .setOAuthAccessToken("58465931-2gN1Ofp7Smyg0A0h8EWsbTDAd39LgLfO7WAnfGFeH")
-          .setOAuthAccessTokenSecret("v7cEbLGw0vwkuuGsZsabsMWmZMjCz7C2Nev9TXRa9xW8I")
+          .setOAuthConsumerKey(args(0))
+          .setOAuthConsumerSecret(args(1))
+          .setOAuthAccessToken(args(2))
+          .setOAuthAccessTokenSecret(args(3))
 
         val auth = new OAuthAuthorization(cb.build)
 

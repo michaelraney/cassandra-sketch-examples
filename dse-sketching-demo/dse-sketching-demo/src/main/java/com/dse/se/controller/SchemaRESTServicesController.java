@@ -1,5 +1,6 @@
 package com.dse.se.controller;
 
+import com.dse.se.dto.StreamingJobDTO;
 import com.dse.se.dto.TopHashTagsDTO;
 import com.dse.se.dto.UniqueUsersDTO;
 import com.dse.se.service.SketchService;
@@ -52,6 +53,18 @@ public class SchemaRESTServicesController {
 
     }
 
+
+
+    @RequestMapping(method = RequestMethod.GET, path = "/startStreaming")
+    public StreamingJobDTO startStreaming(@RequestParam(name = "consumerKey") String consumerKey,
+                                          @RequestParam(name = "consumerSecret") String consumerSecret,
+                                          @RequestParam(name = "accessToken") String accessToken,
+                                          @RequestParam(name = "accessTokenSecret") String accessTokenSecret) throws ParseException{
+
+
+        return sketchService.startStreaming(consumerKey, consumerSecret, accessToken, accessTokenSecret);
+
+    }
 
 
 
