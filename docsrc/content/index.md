@@ -4,8 +4,7 @@ type: index
 weight: 0
 ---
 
-#### Note from author
-### This demo requires Twitter App Key (Free)
+#### This demo requires Twitter App Key (Free)
 To run this example, you will need to signup for the Twitter API to gain the appropriate credentials.  To include API key, API secret, Access token, and Access token secret, follow the steps below:
 * Go to https://apps.twitter.com/ and log in with your twitter credentials.
 * Click "Create New App"
