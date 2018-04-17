@@ -27,15 +27,20 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "dse-sketching-demo/dse-sketching-streaming-job/pom.xml" }}
+          - v1-dependencies-{{ checksum "dse-sketching-demo/dse-sketching-demo/pom.xml" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
       - run: mvn dependency:go-offline -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml
+      - run: mvn dependency:go-offline -f dse-sketching-demo/dse-sketching-demo/pom.xml
+
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "dse-sketching-demo/dse-sketching-streaming-job/pom.xml" }}
+          key: v1-dependencies-{{ checksum "dse-sketching-demo/dse-sketching-demo/pom.xml" }}
 
       # run tests!
       - run: mvn package -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml
+      - run: mvn package -f dse-sketching-demo/dse-sketching-demo/pom.xml
