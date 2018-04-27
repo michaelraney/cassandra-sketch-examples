@@ -60,10 +60,10 @@ object TwitterStreamSketchDemo {
         val stream = TwitterUtils.createFilteredStream(ssc, Some(auth), Some(tweetFilterQuery), StorageLevel.MEMORY_ONLY_SER_2)
 
         val countMinSketch = new TwitterSteamCountMinSketch
-        val hyperLoglog = new TwitterSteamHyperloglogSketch
+        val hyperLogLog = new TwitterSteamHyperloglogSketch
 
         countMinSketch.start(stream, sc)
-        hyperLoglog.start(stream, sc, WINDOW_SIZE)
+        hyperLogLog.start(stream, sc, WINDOW_SIZE)
 
         ssc.start()
         //ssc.awaitTerminationOrTimeout(minutesToStream * 60  * 1000)//5 minutes...

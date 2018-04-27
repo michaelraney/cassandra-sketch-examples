@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#There are two spark jobs in this demo
+#A streaming job that listens to active twitter feed
+#A batch job that aggregates inital sketch and creates a new perspectives 
 
 if [ `hostname` == 'node0' ]
 then
