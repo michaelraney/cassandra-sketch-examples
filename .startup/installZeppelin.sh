@@ -6,9 +6,11 @@
 # If we are on node0 install Zeppelin, copy Notebooks and start it up.
 if [ `hostname` == 'node0' ]
 then
-  curl -o zeppelin-0.7.1.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/zeppelin-0.7.1-dse-5.1.1.tar.gz' -L
+  echo "Downloading Zeppelin..."
+  curl -s -o zeppelin-0.7.1.tar.gz 'https://s3.amazonaws.com/dse-sketch-examples/zeppelin-0.7.1-dse-5.1.1.tar.gz' -L 2>&1 | tee zepplin-download.log
 
-  tar -zxvf zeppelin-0.7.1.tar.gz
+  echo "Untar Zeppelin..."
+  tar -zxf zeppelin-0.7.1.tar.gz
 
   #Zeppelin Notebook API.
   zeppelin-0.7.1/bin/zeppelin-daemon.sh start

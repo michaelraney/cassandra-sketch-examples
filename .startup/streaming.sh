@@ -1,12 +1,13 @@
 #!/bin/bash
 #There are two spark jobs in this demo
 #A streaming job that listens to active twitter feed
-#A batch job that aggregates inital sketch and creates a new perspectives 
+#A batch job that aggregates inital sketch and creates a new perspectives
 
 if [ `hostname` == 'node0' ]
 then
+  echo "Building Steaming Job... output to streaming-job-build.log"
   #Build Twitter Streaming Project
-  mvn package -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml
+  mvn package -f dse-sketching-demo/dse-sketching-streaming-job/pom.xml > streaming-job-build.log
 
   #kickoff streaming job
   #moved to demo application node0:8081/config based to make use of different user credentials

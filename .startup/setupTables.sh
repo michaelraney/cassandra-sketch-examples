@@ -6,12 +6,12 @@
 if [ `hostname` == 'node0' ]
 then
 
-#Race Condition DSE has not started
+  #Race Condition DSE has not started
   echo "Has DSE Started?"
   if ! nc -z node0 9042; then
 
     counter=0
-    iterations=30
+    iterations=36
     sleepInterval=5
 
     echo "Waiting for DSE to start..."
@@ -23,10 +23,10 @@ then
        counter=$((counter+1))
 
        if [[ $counter -gt $iterations ]]; then
+         echo "DSE not started exit..."
          break
        fi
     done
-    echo "DSE is ready!"
   fi
 
    cqlsh node0 -f cql/setupTables.cql
