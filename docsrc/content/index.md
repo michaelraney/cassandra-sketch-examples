@@ -6,12 +6,8 @@ weight: 0
 # What's Trending: DataStax Sketching Examples
 This is a guide for how to use the What's Trending Demo for the DataStax Enterprise (DSE) platform. Data Sketching is key concept in a stream data processing architecture. In this demo we combine the power of spark streaming with the strengths of DSE multi-model data store to deliver a powerful real-time architecture for delivering actionable insights on trending data.
 
-
-
-<img src="https://github.com/michaelraney/datastax-sketch-examples/raw/master/docsrc/static/images/both-perspectives.png" width="600">
-
 ![alt text](
-https://github.com/michaelraney/datastax-sketch-examples/raw/master/docsrc/static/images/perspective-10min.png "DemoScreen")
+https://github.com/michaelraney/datastax-sketch-examples/raw/master/docsrc/static/images/both-perspectives.png "DemoScreen")
 
 
 #### This Demo Requires a Twitter Developer App Key (Free)
