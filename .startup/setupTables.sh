@@ -17,13 +17,14 @@ then
     echo "Waiting for DSE to start..."
     while  ! nc -z node0 9042; do
 
-       echo "Iteration $counter :Sleep $sleepInterval seconds..."
+       echo "Waiting for DSE... Iteration: $counter Sleep: $sleepInterval seconds..."
+
        sleep $sleepInterval
 
        counter=$((counter+1))
 
        if [[ $counter -gt $iterations ]]; then
-         echo "DSE not started exit..."
+         echo "DSE has not started yet. Setup tables may fail."
          break
        fi
     done

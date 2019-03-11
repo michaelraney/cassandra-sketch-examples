@@ -68,9 +68,11 @@ class RollupTopHashTags extends Serializable {
 
           val previewResults = globalTopK.map(a => a._1 -> a._2).toMap
 
-          val oneWindowValue = sc.parallelize(Seq(("tophashtagsrollup", todayAsString, line._1, store, previewResults)))
+          val previewTagNames = globalTopK.map(a => a._1).toSet
 
-          oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore", "preview"))
+          val oneWindowValue = sc.parallelize(Seq(("tophashtagsrollup", todayAsString, line._1, store, previewResults, previewTagNames)))
+
+          oneWindowValue.saveToCassandra("approximations", "cmsdata10min", SomeColumns("id", "date", "batchtime", "cmsstore", "preview", "previewtagnames"))
 
 
 
