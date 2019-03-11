@@ -47,8 +47,8 @@ then
 
   sleep 5
 
-  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/CountMinSketch/note.json \--header "Content-Type: application/json"
-  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/HyperLogLog/note.json \--header "Content-Type: application/json"
+  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/zeppelin/CountMinSketch/note.json \--header "Content-Type: application/json"
+  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/zeppelin/HyperLogLog/note.json \--header "Content-Type: application/json"
 
   sleep 5
 

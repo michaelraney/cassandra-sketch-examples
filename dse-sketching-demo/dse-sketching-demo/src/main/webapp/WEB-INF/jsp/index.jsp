@@ -62,15 +62,18 @@
                     <td class="setitleOptions">
 
                         <script language="JavaScript">
-                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":8888'" + "> <img class='seimagelinks' src='images/OptionsIcon.png'></a>" );
+                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":8888'" + "> <img class='seimagelinks' src='images/opscentericon.png'></a>" );
+                        </script>
+                        <script language="JavaScript">
+                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":9091'" + "> <img class='seimagelinks' src='images/notebook.png'></a>" );
                         </script>
                          <script language="JavaScript">
                             document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":7080'" + "> <img class='seimagelinks' src='images/analytics.png'></a>" );
                         </script>
-                        <script language="JavaScript">
-                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":8080'" + "> <img class='seimagelinks' src='images/notebook.png'></a>" );
-                        </script>
 
+                        <script language="JavaScript">
+                            document.write("<a target='_blank' href='" + window.location.protocol + "//" + window.location.hostname + ":8081//config'" + "> <img class='seimagelinks' src='images/OptionsIcon.png'></a>" );
+                        </script>
                         <a href="https://github.com/michaelraney/datastax-sketch-examples" target="_blank" >
                             <img class='seimagelinks' src="images/github.png">
                         </a>
