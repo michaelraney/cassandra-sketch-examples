@@ -11,7 +11,7 @@ lsof -i:1234 |grep -i websocket| awk '{print $2}'| xargs kill -9
 
 mkdir websocketd
 
-cd websocketd
+cd websocketdwebsocketd
 
 IP=$(ifconfig | awk '/inet/ { print $2 }' | egrep -v '^fe|^127|^192|^172|::' | head -1)
 IP=${IP#addr:}
@@ -51,4 +51,4 @@ ws.onmessage = function(event) {
 </html>
 EOF
 
-nohup python -m SimpleHTTPServer 1235 & ./websocketd/websocketd --port 1234 tail -1000f ./startup.out &
+nohup python -m SimpleHTTPServer 1235 & ./websocketd --port 1234 tail -1000f ./startup.out &
