@@ -5,7 +5,7 @@
 # This is temperary until assethub is fixed
 if [ `hostname` == 'node0' ]
 then
-
+  
   sudo service opscenterd restart
 
 fi

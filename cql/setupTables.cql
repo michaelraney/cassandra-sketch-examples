@@ -40,4 +40,17 @@ RELOAD SEARCH INDEX ON approximations.cmsdata10min;
 
 REBUILD SEARCH INDEX ON approximations.cmsdata10min;
 
+
+ALTER KEYSPACE system_auth WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
+ALTER KEYSPACE dse_security WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
+ALTER KEYSPACE HiveMetaStore WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
+ALTER KEYSPACE dse_analytics WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
+ALTER KEYSPACE dse_leases WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
+ALTER KEYSPACE dse_perf WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+
 ALTER KEYSPACE dsefs WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};

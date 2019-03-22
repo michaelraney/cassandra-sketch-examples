@@ -39,4 +39,6 @@ then
    nodetool repair -pr
 
    sleep 10s
+
+   echo "Finished Setup Tables"
 fi

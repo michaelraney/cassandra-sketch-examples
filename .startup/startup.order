@@ -1,8 +1,9 @@
+websocketd
 hugo
 setupTables.sh
 sparkHistory.sh
 installZeppelin.sh
 streaming.sh
 trendingWebApp.sh
-studionotenook.sh
+studioNotebook.sh
 restartOpsCenter.sh

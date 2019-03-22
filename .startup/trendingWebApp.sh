@@ -11,4 +11,5 @@ then
 
   nohup java -Xmx1g -Xms1g -Dserver.port=8081 -jar dse-sketching-demo/dse-sketching-demo/target/dse-sketching-demo.war >> trending-app.out &
 
+  echo "Finished Streaming Application Setup"
 fi

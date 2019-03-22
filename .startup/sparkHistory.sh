@@ -15,5 +15,6 @@ then
 
   #Start Spark Job Server with custom config
   #sudo dse spark-history-server start --properties-file /tmp/datastax-sketch-examples/dse-sketching-demo/history-server-config/spark-defaults.conf
-  
+
+  echo "Finished Setup Spark History Server"
 fi

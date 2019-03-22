@@ -21,4 +21,6 @@ then
 
   #install new cron file
   crontab mycron
+
+  echo "Finished cron job setup"
 fi
