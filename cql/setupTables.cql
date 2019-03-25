@@ -45,7 +45,7 @@ ALTER KEYSPACE system_auth WITH REPLICATION = {'class' : 'NetworkTopologyStrateg
 
 ALTER KEYSPACE dse_security WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
 
-ALTER KEYSPACE HiveMetaStore WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
+ALTER KEYSPACE "HiveMetaStore" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
 
 ALTER KEYSPACE dse_analytics WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3};
 
