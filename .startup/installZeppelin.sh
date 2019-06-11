@@ -22,39 +22,39 @@ then
   sudo apt-get install jq
 
   #Initialize Zeppelin.
-  curl -o zepplinhome.out "http://localhost:8080/#/" -L -m 10
-  curl -o zepplininterp.out "http://localhost:8080/#/interpreter" -L -m 10
+  curl -o zepplinhome.out "http://node0:8080/#/" -L -m 10
+  curl -o zepplininterp.out "http://node0:8080/#/interpreter" -L -m 10
 
   #Cassandra interpreter id
-  CASSANDRA_INTERP_ID=$(curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|.id' -r)
+  CASSANDRA_INTERP_ID=$(curl node0:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|.id' -r)
 
   #Cassandra interpreter settings
-  #Modify localhost
-  curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|setpath(["properties","cassandra.cluster"]; "Cluster 1")|setpath(["properties","cassandra.hosts"]; "node0")|del(.id)' > cassandra-settings.json
+  #Modify node0
+  curl node0:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="cassandra")|setpath(["properties","cassandra.cluster"]; "Cluster 1")|setpath(["properties","cassandra.hosts"]; "node0")|del(.id)' > cassandra-settings.json
 
   #Update Interpreter Settings
   curl -vX PUT "http://node0:8080/api/interpreter/setting/$CASSANDRA_INTERP_ID" -d @cassandra-settings.json \--header "Content-Type: application/json"
 
   #Spark interpreter id
-  SPARK_INTERP_ID=$(curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="spark")|.id' -r)
+  SPARK_INTERP_ID=$(curl node0:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="spark")|.id' -r)
 
   #Spark interpreter settings
   #Add cassandra host setting
-  curl localhost:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="spark")|setpath(["properties","spark.cassandra.connection.host"]; "node0")|del(.id)' > spark-settings.json
+  curl node0:8080/api/interpreter/setting | jq '.body|.[]|select(.name=="spark")|setpath(["properties","spark.cassandra.connection.host"]; "node0")|del(.id)' > spark-settings.json
 
   #Update Interpreter Settings
   curl -vX PUT "http://node0:8080/api/interpreter/setting/$SPARK_INTERP_ID" -d @spark-settings.json \--header "Content-Type: application/json"
 
   sleep 5
 
-  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/zeppelin/CountMinSketch/note.json \--header "Content-Type: application/json"
-  curl -vX POST http://localhost:8080/api/notebook/import -d @notebook/zeppelin/HyperLogLog/note.json \--header "Content-Type: application/json"
+  curl -vX POST http://node0:8080/api/notebook/import -d @notebook/zeppelin/CountMinSketch/note.json \--header "Content-Type: application/json"
+  curl -vX POST http://node0:8080/api/notebook/import -d @notebook/zeppelin/HyperLogLog/note.json \--header "Content-Type: application/json"
 
   sleep 5
 
   zeppelin-0.7.1/bin/zeppelin-daemon.sh restart
 
-  #Determine the localhost
+  #Determine the node0
   #MYIP=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'|grep -v "172.17.0.1")
   #node0
   echo "Finished Zeppelin Install"
